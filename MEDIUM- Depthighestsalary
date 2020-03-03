@@ -29,19 +29,9 @@ select d.Name as 'Department, e.Name as 'Employee', e.Salary as 'Salary' from Em
 group by e.DepartmentId order by Salary desc limit 1
 
 OR
-
-### we form 3 tables employee, department and a custom table with (salary and departmentid), so its a cartisian product
-### then we apply the conditions
-
-select d.name as 'Department', e.name as 'Employee', e.salary as 'Salary' from employee e, department d,
-(select max(salary) as 'Salary', e2.departmentid from employee e2 group by e2.departmentid) s
-where d.id = e.departmentid and
-e.salary = s.salary and
-s.departmentid = e.departmentid
-
-
-
-
-
-
+select d.Name as 'Department, e.Name as 'Employee', e.Salary as 'Salary' from Employee, Department d ,
+(select max(e2.salary) as salary, e2.DepartmentId from Employee e2 group by e2.Department Id) as s where
+e.DepartmentId=d.Id and
+s.salary=e.salary and
+s.DepartmentId= e.DepartmentId
 
