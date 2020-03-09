@@ -16,4 +16,7 @@ Given the Employee table, write a SQL query that finds out employees who earn mo
 | Joe      |
 +----------+
 
+
+
+
 select e1.Name from employee e1, employee e2 where e1.Salary>e2.Salary and e2.ManagerId= e1.Id
