@@ -35,3 +35,6 @@ e.DepartmentId=d.Id and
 s.salary=e.salary and
 s.DepartmentId= e.DepartmentId
 
+OR
+
+Select Department.Name as department , Employee.Name as Employee, max(Salary) from Department left join Employee on Employee.DepartmentId=Department.Id  group by Department 
