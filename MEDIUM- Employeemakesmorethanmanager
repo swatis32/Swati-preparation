@@ -17,6 +17,6 @@ Given the Employee table, write a SQL query that finds out employees who earn mo
 +----------+
 
 
+#e1 Manager id should be an employee row in e2 table
 
-
-select e1.Name from employee e1, employee e2 where e1.Salary>e2.Salary and e2.ManagerId= e1.Id
+select e1.Name from employee e1, employee e2 where e1.Salary>e2.Salary and e1.ManagerId= e2.Id
