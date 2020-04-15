@@ -57,5 +57,9 @@ order by student_number desc, d.dept_name asc
 
 # ORDER THE FINAL RESULT BY STUDENT NUMBER FIRST, THEN DEPT NAME
 
+OR
+
+Select dept_name, count(*) from department left join student 
+on student.dept_id=department.dept_id group by dept_name order by count(*) DESC, order by dept_name ASC
 
 
