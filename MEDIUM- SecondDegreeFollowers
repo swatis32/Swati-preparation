@@ -35,3 +35,9 @@ f1.followee = f.follower group by f.follower
 order by f.follower asc
 
 # we take each distinct followee who is also a follower [JOIN CONDITION ABOVE] (ie only B and D) and we count how many times they appear (number of rows of B and D as followees)
+
+
+OR (Swatis)
+Select f1.followee , count(*) as num from follow f1 group by f1.followee 
+where f1.followee in (select distinct (f2.follower) from follow f2)
+
