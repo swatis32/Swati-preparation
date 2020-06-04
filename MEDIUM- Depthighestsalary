@@ -25,6 +25,15 @@ Write a SQL query to find employees who have the highest salary in each of the d
 | Sales      | Henry    | 80000  |
 +------------+----------+--------+
 
+#This is a 3 join problem 
+select e.name,e.salary,d.dept_name from employee e join department d
+on e.id=d.department_id
+join (select dept_id, max(salary) as dept_max from employee group by dept_id) as dept_salary_table
+on d.department_id=dept_salary_table.department_id
+where e.salary=dept_salary_table.salary
+
+
+
 select d.Name as 'Department, e.Name as 'Employee', e.Salary as 'Salary' from Employee e left join Department d on e.DepartmentId=d.Id
 group by e.DepartmentId order by Salary desc limit 1
 
