@@ -1,0 +1,19 @@
+Number  Freq
+1        5
+2        10
+3        20
+
+
+select case when mod(sum(Freq),2)=0 then select avg(Number) from 
+
+                                  (select Number,sum(Freq) as n, sum(Freq) over(order by Freq) as CumFreq from table) as intermdiate
+                                  where CumFreq in (n/2,(n+1)/2)
+            when mod(sum(Freq),2)=1 then  select Number from 
+
+                                  (select Number,sum(Freq) as n, sum(Freq) over(order by Freq) as CumFreq from table) as intermdiate
+                                  where CumFreq in ((n+1)/2)
+             end as median
+                                  
+                                  
+                   
+
