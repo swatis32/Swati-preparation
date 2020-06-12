@@ -43,3 +43,14 @@ salary       freq   name
 500             1   msft
 600             1   goog
 1100            1   fb
+
+
+
+now that we have a freq histogram view of the salaries - look at MedianOfNumbersGivenFrequency.txt if this is unclear!
+select v.name, avg(v.salary) from v where v.freq >=
+abs(
+(select sum(v1.freq) from v v1 where v1.salary <= v.salary)
+-
+(select sum(v2.freq) from v v2 where v2.salary >= v.salary)
+)
+
