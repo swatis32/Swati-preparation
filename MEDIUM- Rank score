@@ -23,9 +23,14 @@ For example, given the above Scores table, your query should generate the follow
 | 3.50  | 4    |
 +-------+------+
 
+LATEST ANSWER USING WINDOW FUNCTION 
+select score, denserank() OVER (Order by  Score) as Rank FROM Scores
+
+
 select s.score, (select count(distinct(score)) from Scores where score >= s.score) as Rank
 from Scores s order by s.score desc
 
 # take 4.0 score (highest score), now take a count of all distinct scores that are >= to 4.0, in the table only 4.0 is >= 4.0 (our score). Hence count(distinct(4.0)) = 1. Hence, rank of first 4.0 is 1
 
 # take, 3.65 score (3rd highest score), now take count of all distinct scores >= 3.65, we get x = 4.0, 3.85, 3.65. Hence count(distinct(x)) is 3, hence rank of 3.65 is 3
+
