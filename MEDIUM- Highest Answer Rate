@@ -41,10 +41,12 @@ LATEST ANSWER BY SWATI on 4/4/2021:
 
 select question_id as survey_log from
                  (SELECT question_id, COUNT(*) as nr
+                  from Table
                   group by question
                   having action='answer') as T1
                   join
                  (SELECT question_id, COUNT(*) as dr
+                  from Table
                   group by question
                   having action='show') as T2
                  on T1. question_id=T2.question_id
