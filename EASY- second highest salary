@@ -17,4 +17,10 @@ For example, given the above Employee table, the query should return 200 as the 
 | 200                 |
 +---------------------+
 
-select Salary  as SecondHighestSalary from Employee order by Salary desc limit 1 offset 1
+SELECT
+    IFNULL(
+      (SELECT DISTINCT Salary
+       FROM Employee
+       ORDER BY Salary DESC
+        LIMIT 1 OFFSET 1),
+    NULL) AS SecondHighestSalary
