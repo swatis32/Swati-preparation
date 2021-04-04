@@ -37,3 +37,17 @@ GROUP BY question_id
 ORDER BY COUNT(answer_id) / COUNT(IF(action = 'show', 1, 0)) DESC
 LIMIT 1;
 
+LATEST ANSWER BY SWATI on 4/4/2021:
+
+select question_id as survey_log from
+                 (SELECT question_id, COUNT(*) as nr
+                  group by question
+                  having action='answer') as T1
+                  join
+                 (SELECT question_id, COUNT(*) as dr
+                  group by question
+                  having action='show') as T2
+                 on T1. question_id=T2.question_id
+                 ORDER BY nr/dr DESC
+                 LIMIT 1
+
