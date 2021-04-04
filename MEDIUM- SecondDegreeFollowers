@@ -30,6 +30,14 @@ Followee would not follow himself/herself in all cases.
 
 Please display the result in follower’s alphabet order.
 
+LATEST ANSWER ON 4/4/2021:
+SELECT follower, count(*) from follow
+			group by follower
+			having count(*)>=1
+			order by follower
+
+-------------------------------------------------------
+
 select distinct(f.follower), count(*) as num from follow f join follow f1 on
 f1.followee = f.follower group by f.follower
 order by f.follower asc
