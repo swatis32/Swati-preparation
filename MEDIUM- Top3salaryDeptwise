@@ -36,6 +36,7 @@ LATEST ANSWER USING WINDOW FUNCTION on 5/19/2021
 Select department, Name, Salary from
 (Select department, Name, Salary , denserank()OVER(order by SALARY DESC GROUP BY DEPARTMENT) as nums from employee join department on employee.departmentid=department.id) T1
 Where T1.nums <=3
+order by department, Salary desc
 
 
 # Write your MySQL query statement below
