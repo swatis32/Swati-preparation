@@ -33,8 +33,18 @@ Notes:
 You may assume there is no tie, in other words there will be at most one winning candidate.
 
 My solution:
+1.
 select name from candidate where id in 
 (select candidateid from vote group by candidateid order by count(*) desc limit 1 )
+
+2.
+8.	Select Name from Candidate join
+(Select candidateId, count(*) as votes from Vote 
+group by candidateId) T1
+      on Candidate.candidateId=T1.candidateId
+	order by votes desc
+      limit 1
+
 
 Abhinav file:
 SELECT
