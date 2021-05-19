@@ -37,8 +37,8 @@ My solution:
 select name from candidate where id in 
 (select candidateid from vote group by candidateid order by count(*) desc limit 1 )
 
-2.
-8.	Select Name from Candidate join
+2. Similar to Abhinav's but making sure order by is done later as sometimes it does not work on views 
+Select Name from Candidate join
 (Select candidateId, count(*) as votes from Vote 
 group by candidateId) T1
       on Candidate.candidateId=T1.candidateId
