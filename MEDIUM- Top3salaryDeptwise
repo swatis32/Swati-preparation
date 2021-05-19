@@ -30,6 +30,14 @@ Write a SQL query to find employees who earn the top three salaries in each of t
 | Sales      | Sam      | 60000  |
 +------------+----------+--------+
 
+
+LATEST ANSWER USING WINDOW FUNCTION on 5/19/2021
+
+Select department, Name, Salary from
+(Select department, Name, Salary , denserank()OVER(order by SALARY DESC GROUP BY DEPARTMENT) as nums from employee join department on employee.departmentid=department.id) T1
+Where T1.nums <=3
+
+
 # Write your MySQL query statement below
 select d.name as 'Department', e.name as 'Employee', e.salary as 'Salary'
 from employee e join department d on e.departmentid = d.id
