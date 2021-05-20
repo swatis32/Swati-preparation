@@ -34,7 +34,7 @@ Write a SQL query to find employees who earn the top three salaries in each of t
 LATEST ANSWER USING WINDOW FUNCTION on 5/19/2021
 
 Select department, Name, Salary from
-(Select department, Name, Salary , denserank()OVER(order by SALARY DESC GROUP BY DEPARTMENT) as nums from employee join department on employee.departmentid=department.id) T1
+(Select department, Name, Salary , denserank()OVER(PARTITION BY department ORDER BY salary DESC ) as nums from employee join department on employee.departmentid=department.id) T1
 Where T1.nums <=3
 order by department, Salary desc
 
