@@ -28,7 +28,7 @@ Write a SQL query to find employees who have the highest salary in each of the d
 LATEST ANSWER BY SWATI USING WINDOWS FUNCTION 6/7/2021:
 
 Select Department, Employee, Salary from
-(Select department.Name as Department, Employee.Name as Employee, Salary, rank() OVER(partion by department.Name as Department, Employee.Name as Employee order by Salary DESC) as rnk from Employee join
+(Select department.Name as Department, Employee.Name as Employee, Salary, rank() OVER(partion by department.Name as Department order by Salary DESC) as rnk from Employee join
 Department on Employee.departmentId=Department.Id) T1
 Where rnk=1
 
