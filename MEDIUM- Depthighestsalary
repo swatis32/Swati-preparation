@@ -25,6 +25,14 @@ Write a SQL query to find employees who have the highest salary in each of the d
 | Sales      | Henry    | 80000  |
 +------------+----------+--------+
 
+LATEST ANSWER BY SWATI USING WINDOWS FUNCTION 6/7/2021:
+
+Select Department, Employee, Salary from
+(Select department.Name as Department, Employee.Name as Employee, Salary, rank() OVER(partion by department.Name as Department, Employee.Name as Employee order by Salary DESC) as rnk from Employee join
+Department on Employee.departmentId=Department.Id) T1
+Where rnk=1
+
+
 LATEST ANSWER BY SWATI 4/4/2021:
 SELECT dept, Name, Salary from Employee join
 (SELECT Department.Name as dept, max( salary) as max_sal, min(id) as departmentID
