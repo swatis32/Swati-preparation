@@ -1,0 +1,16 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+3. Most frequent items
+From the following table containing a list of dates and items ordered, write a query to return 
+the most frequent item ordered on each date. Return multiple items in the case of a tie.
+
+select date, item from 
+(
+select date, item, rank()over(partition by date order by fq desc) as rnk from
+(
+select date, item, count(item) as fq from items
+group by date, item
+) T1
+) T2
+where rnk=1
