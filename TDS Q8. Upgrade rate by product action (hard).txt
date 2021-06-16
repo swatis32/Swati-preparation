@@ -1,0 +1,24 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+8. Upgrade rate by product action (hard)
+Given the following two tables, return the fraction of users, rounded to two 
+decimal places, who accessed feature two (type: F2 in events table) 
+and upgraded to premium within the first 30 days of signing up.
+
+
+select ROUND(SUM(case when premium_date-join_date <30 then 1
+		else 0 end)/count(*),2)
+		as rate
+FROM users join
+(
+select T1.user_id, premium_date from 
+
+(select user_id, access_date as f2_date where type='F2') T1
+left join
+(select user_id, access_date as premium_date where type='P') T2
+on T1.user_id=T2.user_id
+)
+T3
+on users.user_id=T3.user_id
+
