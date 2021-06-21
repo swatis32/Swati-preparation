@@ -1,0 +1,34 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+9. Most friended
+Given the following table, return a list of users and their corresponding friend count. 
+Order the result by descending friend count, and in the case of a tie, by ascending user ID. 
+Assume that only unique friendships are displayed
+(i.e., [1, 2] will not show up again as [2, 1] ). 
+
+Ans 1.
+select COALESCE(T1.user1,T2.user2) as user , SUM(COALESCE(cnt1,0),COALESCE(cnt2,0)) as total  from
+
+(select user1, count(*) as cnt1 from friends
+group by user1
+)T1
+full outer join
+(
+select user2, count(*) as cnt2 from friends
+group by user2
+)T2
+on T1.user1=T2.user2
+order by total desc, user asc
+
+Ans 2. Good!!
+SELECT user_id, count(*) AS friend_count
+FROM 
+(
+SELECT user1 AS user_id
+FROM friends
+UNION ALL
+SELECT user2 AS user_id
+FROM friends) t1
+GROUP BY user_id
+ORDER BY friend_count DESC, user_id ASC
