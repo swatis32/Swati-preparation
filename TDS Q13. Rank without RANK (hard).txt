@@ -1,0 +1,9 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+13. Write a SQL query to rank scores. If there is a tie between two scores, both 
+should have the same ranking. Note that after a tie, the next ranking number should be the next consecutive integer value. 
+In other words, there should be no "holes" between ranks. (This is the real leetcode one)
+
+Ans
+select score, dense_rank()OVER(order by score DESC) as score_rank from scores				
