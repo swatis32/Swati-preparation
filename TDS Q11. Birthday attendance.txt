@@ -1,0 +1,15 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+11. Given the following two tables, write a query to return the fraction of students, rounded to 
+two decimal places, who attended school
+(attendance = 1) on their birthday.
+
+SELECT ROUND(SUM(attendance),count(*)) as birthday_attendance from
+(
+select students.student_id, attendance from students
+					     left join attendance
+					     on students.student_id=attendance.student_id 
+					     and extract(MONTH from students.date_of_birth)=extract(MONTH from attendance.school_date)
+					     and extract(DAY from students.date_of_birth)=extract(DAY from attendance.school_date)
+)T1
