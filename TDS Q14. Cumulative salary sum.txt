@@ -1,0 +1,20 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+14. Cumulative salary sum
+The following table holds monthly salary information for several employees. Write a query
+ to get, for each month, the cumulative sum of an employee’s salary over a period of 3 months, 
+excluding the most recent month. The result should be ordered by ascending employee ID and month.
+
+#### CLEVER SOLUTION WHERE THEY USED DESC IN RANK
+
+select id, pay_month , salary , sum(salary) OVER( partition by id order by month_rank DESC) from
+
+(select *, rank() OVER(partition by id order by pay_month DESC) as month_rank from employee)T1
+where month_rank != 1
+and month_rank <=4
+order by id, pay_month
+
+
+
+		
