@@ -1,0 +1,47 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+15. Team standings
+Write a query to return the scores of each team in the teams table after all matches displayed in the matches table. Points 
+are awarded as follows: zero points for a loss, one point for a tie, and three points for a win. 
+The result should include team name and points, and be ordered by decreasing points. In case of a tie, order 
+by alphabetized team name.
+
+
+select team_name, sum(goals) as total_score from teams join
+
+(select host_team as team, host_score as goals from 
+(select *, case when host_goals > guest_goals then 3
+	       when host_goals = guest_goals then 1
+		else 0 
+		end as host_score,
+	 case when guest_goals > host_goals then 3
+	       when host_goals = guest_goals then 1
+		else 0 
+		end as guest_score) T2
+
+union all
+select guest_team as team, guest_score as goals from 
+(select *, case when host_goals > guest_goals then 3
+	       when host_goals = guest_goals then 1
+		else 0 
+		end as host_score,
+	 case when guest_goals > host_goals then 3
+	       when host_goals = guest_goals then 1
+		else 0 
+		end as guest_score) T3
+
+)T1
+on teams.team_id=T1.team
+order by total_score DESC, team_name ASC
+
+
+####################################################################################
+
+
+
+
+
+
+
+		
