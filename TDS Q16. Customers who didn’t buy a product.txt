@@ -1,0 +1,17 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+16. Customers who didn’t buy a product
+From the following table, write a query to display the ID and name of customers who 
+bought products A and B, but didn’t buy product C, ordered by ascending customer ID.
+
+select customer_id, name from customers where customer_id in
+
+(
+select distinct customer_id from orders where product_name='A'	and customer_id in
+
+(select distinct customer_id from orders where product_name='B') and customer_id not in
+
+(select distinct customer_id from orders where product_name!='C')
+)
+order by customer_id	
