@@ -1,0 +1,18 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+18. Maximally-separated cities
+From the same table in question 17, write a query to return the 
+furthest-separated pair of cities for each state, and the corresponding 
+distance (in degrees, rounded to 2 decimal places) between those two cities
+
+select state, city1, city2, dist from
+(
+select T1.state, T1.city as city1, T2.city as city2 , ROUND(SQRT(SUM(POWER((T1.latitude-T2.latitude),2),POWER((T1.longitude-T2.longitude),2))),2) as dist, 
+rank() OVER(partition by T1.state order by ROUND(SQRT(SUM(POWER((T1.latitude-T2.latitude),2),POWER((T1.longitude-T2.longitude),2))),2) DESC) as rnk
+
+																		from stations T1
+																	 	join stations T2
+																		on T1.state=T2.state and T1.city!=T2.city
+)T3
+where rnk=1
