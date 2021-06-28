@@ -1,0 +1,23 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+17. Median latitude (hard)
+Write a query to return the median latitude of 
+weather stations from each state in the following table, rounding to the nearest tenth of a degree
+
+
+select state, AVG(latitude) from 
+
+(select state,latitude rank() over(partition by state order by latitude) as rnk, count(*) over(partition by state) as counts from stations)
+where rnk>=counts/2 and rnk <=counts/2+1
+group by state
+
+
+
+##########################################
+On the whole list:
+
+select cast(avg(lat_n) AS decimal(10,4)) from
+(select lat_n, RANK() OVER(order by lat_n) as rnk from station)T1
+where rnk>=(select count(*)/2 from station)
+and rnk<=(select (count(*)/2)+1 from station)
