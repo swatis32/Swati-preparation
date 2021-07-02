@@ -1,0 +1,32 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+20. Three in a row
+The attendance table logs the number of people counted in a crowd each day 
+an event is held. Write a query to return a table showing the date and visitor count 
+of high-attendance periods, defined as three consecutive entries 
+(not necessarily consecutive dates) with more than 100 visitors.
+
+
+select distinct T1.event_date, T1.visitiors from
+
+(select row_number()OVER(order by event_date) as row, event_date, visitors from attendance)T1
+join
+(select row_number()OVER(order by event_date) as row, event_date, visitors from attendance)T2
+join
+(select row_number()OVER(order by event_date) as row, event_date, visitors from attendance)T3
+on ( (T1.row=T2.row-1 and T2.row=T3.row-1) or (T2.row=T1.row-1 and T1.row=T3.row-1) or (T2.row=T1.row-1 and T3.row=T2.row-1))
+and T1.visitors>100 and T2.visitors>100 and T3.visitors>100
+
+ran in Leetcode
+# https://leetcode.com/problems/human-traffic-of-stadium/submissions/
+
+select distinct T1.id, T1.visit_date, T1.people from
+					Stadium as T1 join	
+					Stadium as T2 join
+					Stadium as T3
+					on ( (T1.id=T2.id-1 and T2.id=T3.id-1) or # t1, t2, t3 here t1 is first
+                        (T2.id=T1.id-1 and T1.id=T3.id-1 )or  # t2, t1, t3 # here t1 is middle
+                        (T2.id=T1.id-1 and T3.id=T2.id-1) )   # t3, t2, t1 # here t1 is end
+					and T1.people>=100 and T2.people>=100 and T3.people>=100
+                    order by T1.visit_date
