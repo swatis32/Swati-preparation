@@ -1,0 +1,18 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+19. Cycle time
+Write a query to return the average cycle time across each month. Cycle 
+time is the time elapsed between one user 
+joining and their invitees joining. Users who joined without an 
+invitation have a zero in the “invited by” column.
+
+select month , AVG(time) as avg_cycle_time from
+(
+select EXTRACT(MONTH from U1.join_date) as month, (U2.join_date-U1.join_date) as time from
+									users U1 join	
+									 users U2
+									on U1.user_id=U2.invited_by
+)T1
+group by month
+order by month 
