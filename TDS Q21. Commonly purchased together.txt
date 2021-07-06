@@ -1,0 +1,23 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+21. Commonly purchased together
+Using the following two tables, write a query to return the names 
+and purchase frequency of the top three pairs of products most often
+ bought together. The names of both products should appear in one column
+
+select concat(T1.name,' ',T2.name) as product_pair, count(*) from 
+
+(
+select order_id, name from orders join products 
+					on orders.product_id=products.id
+)T1
+join
+(
+select order_id, name from orders join products 
+					on orders.product_id=products.id
+)T2
+on T1.order_id=T2.order_id and T1.name < T2.name # smart to avoid duplicates eg. A<B
+group by product_pair
+order by count(*) desc
+LIMIT 3
