@@ -1,0 +1,15 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+22. Average treatment effect (hard)
+From the following table summarizing the results of a study, calculate 
+the average treatment effect as well as upper and lower bounds 
+of the 95% confidence interval. Round these numbers to 3 decimal places.
+
+
+select treat_mean-control_mean as point_estimate, (treat_mean-control_mean)- 1.96*(control_std^2/control_size+ treat_std^2/treat_size)^.5 as lower_bound,
+					 (treat_mean-control_mean)+ 1.96*(control_std^2/control_size+ treat_std^2/treat_size)^.5  as upper_bound FROM
+
+(select AVG(outcome) as control_mean, STDEV(outcome) as control_std, count(*) as control_size from study where assignment=0)T1,
+
+(select AVG(outcome) as treat_mean, STDEV(outcome) as treat_std, count(*) as treat_size from study where assignment=1)T2
