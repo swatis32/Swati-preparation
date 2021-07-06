@@ -6,6 +6,7 @@ From the following table summarizing the results of a study, calculate
 the average treatment effect as well as upper and lower bounds 
 of the 95% confidence interval. Round these numbers to 3 decimal places.
 
+Good: You can join table without common column
 
 select treat_mean-control_mean as point_estimate, (treat_mean-control_mean)- 1.96*(control_std^2/control_size+ treat_std^2/treat_size)^.5 as lower_bound,
 					 (treat_mean-control_mean)+ 1.96*(control_std^2/control_size+ treat_std^2/treat_size)^.5  as upper_bound FROM
