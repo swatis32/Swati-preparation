@@ -1,0 +1,17 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+23. Rolling sum salary
+The following table shows the monthly salary for an employee for the first 
+nine months in a given year. From this, write a query to return a table that displays, 
+for each month in the first half of the year, the rolling sum of the employee’s salary for 
+that month and the following two months, ordered chronologically.
+
+
+select distinct s1.month , s1.salary+s2.salary+s3.salary as salary_3_mos from salary s1, salary s2, 
+									salary s3
+							on ((s1.month=s2.month-1 and s2.month=s3.month-1) # s1, s2, s3
+							or (s2.month=s1.month-1 and s1.month=s3.month-1)  # s2, s1, s3
+							or (s3.month=s2.month-1 and s2.month=s1.month-1)) # s3, s2, s1
+							and s1.month <=6
+							order by s1.month
