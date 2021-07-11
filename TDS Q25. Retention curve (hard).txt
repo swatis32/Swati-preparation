@@ -1,0 +1,34 @@
+# Practice Link
+https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+
+25. Retention curve (hard)
+From the following user activity table, write a query to return the fraction of 
+users who are retained (show some activity) a given number of days after joining. 
+By convention, users are considered active on their join day (day 0)
+
+
+select day_one, count(*) as n_total , count(action_date) as n_active , n_total/n_active as retention from
+(
+select users.user_id, action_date, dates, day_no from users right join
+(
+select T2.user_id, T2.dates,(T2.dates-T3.action_date) as day_no from 
+(
+select distinct user_id, dates from users join
+(
+SELECT cast(generate_series(min(action_date), max(action_date), 
+            '1 day'::interval) AS date) AS dates
+FROM users 
+)T1
+)T2
+
+left join
+(select user_id, action_date as join date from users where action='Join')T3
+on T2.user_id=T3.user_id
+where day_one>=0
+)
+T4
+on users.user_id=T4.user_id
+and users.action_date=T4.dates
+)T5
+group by day_one
+order by day_one
