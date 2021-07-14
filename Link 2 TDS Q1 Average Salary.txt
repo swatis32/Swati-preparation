@@ -1,0 +1,22 @@
+# Practice Link
+https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+
+Q1. Average Salary
+Given two tables below, write a query to display the comparison 
+result (higher/lower/same) of the 
+average salary of employees in a department to the company’s average salary.
+
+
+
+select distinct pay_month, department_id, CASE when dept_avg>company_avg then 'higher'
+					       when dept_avg<company_avg then 'lower'
+					       else 'same'
+					       end as comparison
+from
+(
+select department_id, left(pay_date,7) as pay_month, AVG(amount) OVER(partition by department_id,left(pay_date,7) ) as dept_avg,
+						     AVG(amount) OVER(partition by left(pay_date,7) ) from salary join employee) as company_avg on
+						     salary.employee_id=employee.employee_id
+)T1
+						      
+
