@@ -1,0 +1,13 @@
+# Practice Link
+https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+
+Q3. Write a query to display the records which have 3 or
+more consecutive rows and the amount of people more than 100(inclusive).
+
+select distinct T1.id, T1.visit_date, T1.people from stadium T1, stadium T2, stadium T3
+					where ((T1.id=T2.id-1 and T2.id=T3.id-1) or
+						(T2.id=T1.id-1 and T1.id=T3.id-1) or
+						 (T3.id=T2.id-1 and T2.id=T1.id-1)) and
+						T1.people>=100 and T2.people>=100 and T3.people>=100
+							
+							
