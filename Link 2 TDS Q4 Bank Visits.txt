@@ -1,0 +1,21 @@
+# Practice Link
+https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+
+Q4. Write an SQL query to find how many users visited 
+the bank and didn’t do any transactions, how many visited the bank 
+and did one transaction and so on.
+
+#note: This is a variation solution
+# 2 transaction count not included in the answer. the transaction numbers need to exist
+
+select transaction_count, count(*) as visit_count from 
+(
+
+select visits.user_id, visits.visit_date, count(transactions.transaction_date) as transactions_count from visits left join transactions
+on visits.user_id=trnsactions.user_id and 
+visits.visit_date=transactions.transaction_date
+group by visits.user_id, visits.visit_date 
+
+)T1
+group by transaction_count
+				
