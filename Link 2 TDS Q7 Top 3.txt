@@ -1,0 +1,14 @@
+# Practice Link
+https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+
+Q7. Write an SQL query to find employees who earn the top 
+three salaries in each of the department. For the above tables, your SQL query should 
+return the following rows (order of rows does not matter).	
+
+select Department, Employee, Salary from 
+(
+select Department.Name as Department, Employee.Name as Employee, Salary , DENSE_RANK() OVER(partition by Department order by salary DESC) from employee join department 
+																 on employee.department_id=department.Id
+)T1
+where rank <=3
+
