@@ -1,0 +1,7 @@
+# Practice Link
+https://gdcoder.com/how-to-nail-a-data-scientist-sql-interview-includes-sql-code/
+
+Q. Not boring movie
+
+select * from cinema where mod(id,2)!=0 and description!= 'boring' 
+		order by rating DESC
