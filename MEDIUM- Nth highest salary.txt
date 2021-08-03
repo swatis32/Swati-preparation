@@ -1,0 +1,9 @@
+# Practice Link
+https://gdcoder.com/how-to-nail-a-data-scientist-sql-interview-includes-sql-code/
+
+Q. Find nth highest salary from table 
+
+select distinct salary as Nthsalary from
+
+	(select salary, dense_rank() over (order by salary DESC) as rnk from employee) T1
+	where rnk=n
