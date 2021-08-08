@@ -1,0 +1,105 @@
+# Practice Link
+https://towardsdatascience.com/7-beginner-to-intermediate-sql-interview-questions-for-data-analytics-roles-e465f26b8fe6
+
+TABLE users(
+  user_id INTEGER PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT,
+  house TEXT);
+
+TABLE follower(
+  user_id INTEGER,
+  follows INTEGER,
+  date_created DATE
+  );
+
+Q.1 How many users are there in each house?
+
+	select house, count(*) from users
+		       group by house
+	
+Q2. List all following links that were created before September 1st, 1993
+
+	select * from follows where date_created < '09-01-1993'
+
+Q3. List all following links that were created before September 1st, 1993, specify first name
+
+	select user_first_name, first_name as follows_first_name , date_created from users join
+
+		(select first_name user_firstname,follows, date_created from users join follower on
+							users.user_id=follower.user_id) T1
+	on users.user_id=T1.follows
+	where date_created < '09-01-1993'
+
+
+Q4. Give a count of how many people followed each user as of 1999–12–31. Give the result in term of “user full name, number of followers”
+
+	select concat(first_name,last_name) as full_name , count(*) as number_of_followers from users join follower 
+												on users.user_id=follower.follows
+												where date_created < '12-31-1991'
+												group by full_name
+												order by number_of_followers DESC
+
+Q5. List the number of users each user follows
+
+	select first_name , count(*) as number_of_followed from users join follower 
+												on users.user_id=follower.user_id
+												group by first_name 
+												order by number_of_followed DESC
+
+Q6. Select all rows from where user from one house follows someone from another house. Give first names and house of each 
+
+	select user_name, user_house, first_name as follows_name, follows_house from users join
+
+	(
+	select first_name as user_name, follows, house as user_house from users join follower on
+									     users.user_id=follower.user_id
+	)T1
+	on users.user_id=T1.follows
+	and user_house!=follows_house
+
+Q7. List all unrequited followings (i.e. where A follows B but B does not follow A)
+
+	select user_name as person, follows_name as does_not_follow_back from
+	(
+	select user_name, follows_name, concat(T1.follows,uid ) as pair1   follows_house from users join
+
+	(
+	select first_name as user_name,users.user_id as uid, follows from users join follower on
+									     users.user_id=follower.user_id
+	)T1
+	on users.user_id=T1.follows
+	)T2
+	where pair1 not in (select concat(follows,user_id) from follower)
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Q5. 
+
+
+
+
+
+
+
+
+
+
