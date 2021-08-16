@@ -1,0 +1,16 @@
+https://www.stratascratch.com/blog/facebook-and-microsoft-data-science-sql-interview-questions/		
+
+
+select month_all_user, new_user_all_user_count as new_users_share, (1-new_user_count/all_user_count from) as share_exist_users
+
+(select extract(month from time_id) as month_new_user, count(distinct user_id) as new_user_count from 
+				(
+				select user_id, min(time_id) as new_user_start_date from facts_set
+				)T1
+				group by month_new_user
+)T2
+join
+
+(select extract(month from time_id) as month_all_user, count(distinct user_id) as all_user_count from fact_set
+)T3
+on T2.month_new_user=T3.month_all_user
