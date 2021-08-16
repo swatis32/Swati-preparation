@@ -11,7 +11,7 @@ select  department.name,employees.id, salary, (case when salary>100000 then
 								
 								from employee join department on
 								employee.department_id=department.id
-								group by department.name,employee_id
+								group by department.name,employee.id
 )T1
 group by name
 having count(*) >=10
