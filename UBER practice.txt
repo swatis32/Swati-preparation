@@ -1,0 +1,20 @@
+https://towardsdatascience.com/the-uber-data-scientist-interview-7ba9ca95f4e3
+
+Q. Given the tables, select the top 3 departments by the highest 
+percentage of employees making over 100K in salary and have at least 10 employees
+
+select name, sum(greater)/count(*) from 
+
+(
+select  department.name,employees.id, salary, (case when salary>100000 then 
+								1 else 0 end) as greater
+								
+								from employee join department on
+								employee.department_id=department.id
+								group by department.name,employee_id
+)T1
+group by name
+having count(*) >=10
+order by sum(greater)/count(*) DESC
+LIMIT 3
+								
