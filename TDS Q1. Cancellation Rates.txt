@@ -7,6 +7,7 @@ From the following table of user IDs, actions, and dates, write a query to retur
 
 My solution:
 
+1. Old
 select T3.user_id, publish/total as publish_rate, cancel/total as cancel_rate from 
 
 ((select user_id, count(start) as total from users
@@ -28,6 +29,7 @@ on T3.user_id=T4.user_id
 
 good solution!!!!
 
+2.
 select user_id, publish/starts as publish_rate, cancels/starts as cancel rate from
 (select user_id,
 	SUM(case when action='start' then 1 else 0 END ) as starts
@@ -35,7 +37,16 @@ select user_id, publish/starts as publish_rate, cancels/starts as cancel rate fr
 	SUM(case when action='cancel' then 1 else 0 END ) as cancels
 	group by user_id) T1
 
+3. 
+select user_id, sum(publish)/sum(starts) as publish_rate, sum(cancel)/sum(starts) as cancel_rate
 
+from
+(
+select user_id, (case when action=publish then 1 else 0 end) as publish,
+		(case when action=cancel then 1 else 0 end) as cancel ,
+		(case when action=publish then 1 else 0 end) as start from users
+)T1
+group by user_id
 
 
 
