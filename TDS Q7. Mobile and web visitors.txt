@@ -4,19 +4,15 @@ https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
 7. Mobile and web visitors
 With the following two tables, return the fraction of users who only visited mobile, only visited web, and visited both.
 
-select sum(mob)/count(*), sum(web)/count(*), sum(both)/cout(*) from
-(
-select user_id, coalesce(mob,0) as mob, coalesce(web,0) as web, case when mob=1 and web=1 then 1 
-									else 0 end
-							       as both
+
+
+SELECT sum(CASE WHEN mobile_user IS NOT NULL AND web_user IS NULL THEN 1 ELSE 0 END )/count(*) AS mobile_fraction,
+        sum(CASE WHEN web_user IS NOT NULL AND mobile_user IS NULL THEN 1 ELSE 0 END )/count(*) AS web_fraction,
+        sum(CASE WHEN web_user IS NOT NULL AND mobile_user IS NOT NULL THEN 1 ELSE 0 END )/count(*) AS both, 
+
 from
 
-(select user_id, count(Distinct user_id) as mob from mobile
-group by user_id) T1
-
-full outer join
 (
-select user_id, count(Distinct user_id) as wb from web
-group by user_id
-)T2
-)T3
+select DISTINCT mobile.user_id as mobile_user, web.user_id as web_user from mobile full outer join web
+					on mobile.user_id=web.user_id
+)T1
