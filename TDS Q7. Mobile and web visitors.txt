@@ -6,7 +6,7 @@ With the following two tables, return the fraction of users who only visited mob
 
 select sum(mob)/count(*), sum(web)/count(*), sum(both)/cout(*) from
 (
-select user_id, coalesce(mob,0) as 0, coalesce(web,0) as web, case when mob=1 and web=1 then 1 
+select user_id, coalesce(mob,0) as mob, coalesce(web,0) as web, case when mob=1 and web=1 then 1 
 									else 0 end
 							       as both
 from
