@@ -22,3 +22,23 @@ on T1.user_id=T2.user_id
 T3
 on users.user_id=T3.user_id
 
+ANOTHER way!! 
+
+select ROUND(count(*)/ (select count(*) from users),2) as upgrade_rate from
+(
+(select user_id, (access_date-join_date) as F2_days from users join events
+							on users.user_id=events.user_id
+							where type='F2'
+							and F2_days <=30
+)T1
+
+join
+(
+select user_id, (access_date-join_date) as P_days from users join events
+							on users.user_id=events.user_id
+							where type='P'
+							and P_days <=30
+)T2
+on T1.user_id=T2.user_id
+)T3
+
