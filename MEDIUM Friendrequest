@@ -41,3 +41,48 @@ select round
     0) ### if the divisor is 0, then mark the result as 0
 ,2) as acceptance_rate
 
+2/20 updates 
+1. Overall
+Select 
+ROUND((Select count(distinct requester_id, accepter_id) from request_accepted)/
+
+(Select count(distinct requester_id, accepter_id) from
+( select * from friend_request
+Union 
+Select * from request_accepted)
+) ,2)as acceptance_rate
+
+2.Can you write a query to return the accept rate but for every month?
+
+Select extract (MONTH from a.date) as mon, sum(accepted)/sum(total ) as acceptance_rate from
+(
+(Select date , count(distinct requester_id, accepter_id) as accepted from request_accepted 
+Group by 1) a
+
+Join 
+(Select date , count(distinct requester_id, accepter_id) as total_sent from
+( select * from friend_request
+Union 
+Select * from request_accepted)
+Group by 1) b
+On a.date=b.date
+)
+
+Group by 1
+
+3.How about the cumulative accept rate for every day?
+
+Select a.date, sum(accepted)/sum(total ) over(order by a.date) as acceptance_rate from
+(
+(Select date , count(distinct requester_id, accepter_id) as accepted from request_accepted 
+Group by 1) a
+
+Join 
+(Select date , count(distinct requester_id, accepter_id) as total_sent from
+( select * from friend_request
+Union 
+Select * from request_accepted)
+Group by 1) b
+On a.date=b.date
+
+
