@@ -17,3 +17,16 @@ join
 group by receiver)
 on T1.sender=T2.receiver
 order by nw DESC
+
+---- Another way using window fucnction (not super efficent, but works)
+
+Select user, nw from 
+(
+Select user, sum(amount) over(partition by user order by date) as nw, dense_rank() over(partition by user order by date DESC) as rank from
+(
+Select sender as user,  date, amount*-1 as amount from transact
+union 
+Select receiver as user, date, amount*-1 as amount from transact
+)
+) T1
+Where rank=1
