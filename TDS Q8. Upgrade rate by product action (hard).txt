@@ -23,7 +23,7 @@ T3
 on users.user_id=T3.user_id
 
 ANOTHER way!! 
-
+-----------------------------------------
 select ROUND(count(*)/ (select count(*) from users),2) as upgrade_rate from
 (
 (select user_id, (access_date-join_date) as F2_days from users join events
@@ -42,3 +42,20 @@ select user_id, (access_date-join_date) as P_days from users join events
 on T1.user_id=T2.user_id
 )T3
 
+Method 3 most recent:
+--------------------------------------------
+Select sum (case when DATED_DIFF(p_access_date, join_date)<30 then 1 else 0 end)/ (select count(*) from users)
+FROM
+
+(Select user_id, join_date, type , p_access_date from
+Users join
+Events on users.user_id=events.user_id
+Where type in (‘P’)
+) as p
+ Join
+(Select user_id, join_date, type , f2_access_date from
+Users join
+Events on users.user_id=events.user_id
+Where type in (‘F2’)
+)f2
+On p.user_id=f2.user_id
