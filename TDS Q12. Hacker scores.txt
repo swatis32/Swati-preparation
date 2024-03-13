@@ -16,4 +16,18 @@ on hackers.hacker_id=T1.hacker_id
 group by hackers.hacker_id, name
 having total_score >0
 order by total_score DESC, hackers.hacker_id ASC
-								
+
+Updated :
+
+Select hacker_id, name, sum(score) as total
+
+From
+(
+Select hacker_id, name , challenge_id, dense_rank() over (partition by hacker_id, challenge_id order by score DESC) as rnk, score
+From hackers join submissions
+On hackers.hacker_id=submissions.hacker_id
+) t1
+Where rnk=1
+And score > 0
+Group by 1,2
+Order by sum(score) DESC, hacker_id ASC
