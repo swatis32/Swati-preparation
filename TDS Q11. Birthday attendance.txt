@@ -5,7 +5,7 @@ https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
 two decimal places, who attended school
 (attendance = 1) on their birthday.
 
-SELECT ROUND(SUM(attendance),count(*)) as birthday_attendance from
+SELECT ROUND(SUM(attendance)/count(*)) as birthday_attendance from
 (
 select students.student_id, attendance from students
 					     join attendance
