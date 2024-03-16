@@ -17,4 +17,5 @@ order by id, pay_month
 
 
 
-		
+ROWS BETWEEN EXAMPLE:
+https://learnsql.com/blog/sql-window-functions-rows-clause/
