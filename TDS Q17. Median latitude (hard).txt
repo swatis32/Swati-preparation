@@ -16,6 +16,19 @@ group by state
 if n is odd, X[(n+1)/2] is median
 if n is even avg (X[n/2], X[n/2]+1 is median
 
+Select state, median_latitude from 
+(
+Select state , AVG(latitude) as median_latitude
+Select state, latitude, dense_rank()(partition by state order by latitude descent) as rnk, count(*)over(partition by state) as cut from stations
+Where rnk in (cnt/2, cnt/2+1)
+And mod(cnt,2)=0
+Union all
+Select state , latitude as median_latitude
+Select state, latitude, dense_rank()(partition by state order by latitude descent) as rnk, count(*)over(partition by state) as cut from stations
+Where rnk=cnt/2
+And mod(cnt,2) !=0
+)
+
 
 ##########################################
 On the whole list:
@@ -24,3 +37,6 @@ select cast(avg(lat_n) AS decimal(10,4)) from
 (select lat_n, RANK() OVER(order by lat_n) as rnk from station)T1
 where rnk>=(select count(*)/2 from station)
 and rnk<=(select (count(*)/2)+1 from station)
+
+
+
