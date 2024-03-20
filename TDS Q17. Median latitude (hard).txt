@@ -25,7 +25,7 @@ And mod(cnt,2)=0
 Union all
 Select state , latitude as median_latitude
 Select state, latitude, dense_rank()(partition by state order by latitude descent) as rnk, count(*)over(partition by state) as cut from stations
-Where rnk=cnt/2
+Where rnk=(cnt+1)/2
 And mod(cnt,2) !=0
 )
 
