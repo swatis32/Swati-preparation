@@ -12,7 +12,7 @@ select state, AVG(latitude) from
 where rnk>=counts/2 and rnk <=counts/2+1
 group by state
 
-
+--------------------------------------------------------------
 if n is odd, X[(n+1)/2] is median
 if n is even avg (X[n/2], X[n/2]+1 is median
 
