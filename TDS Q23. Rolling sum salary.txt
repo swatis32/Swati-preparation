@@ -17,7 +17,7 @@ select distinct s1.month , s1.salary+s2.salary+s3.salary as salary_3_mos from sa
 							order by s1.month
 
 
-Method 2:
+Method 2: https://learnsql.com/blog/sql-window-functions-rows-clause/
 
 Select month, sum(salary) over(order by month ROWS BETWEEN CURRENT ROW and 2 FOLLOWING) as salary_3_months
 From salary
