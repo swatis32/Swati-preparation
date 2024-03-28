@@ -15,3 +15,8 @@ select distinct s1.month , s1.salary+s2.salary+s3.salary as salary_3_mos from sa
 							or (s3.month=s2.month-1 and s2.month=s1.month-1)) # s3, s2, s1
 							and s1.month <=6
 							order by s1.month
+
+
+Method 2:
+Select month, sum(salary) over(order by month ROWS BETWEEN CURRENT ROW and 2 FOLLOWING) as salary_3_months
+From salary
