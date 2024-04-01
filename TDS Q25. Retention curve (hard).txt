@@ -34,3 +34,19 @@ and users.action_date=T4.dates
 )T5
 group by day_one
 order by day_one
+
+--------- Updated 4/1-------
+
+Select datediff(new_date,action_date), count(distinct user_id) n_total, count(action) as n_active, count(action)/count(distinct user_id) as retention
+From
+(
+Select generate_series (min(action_date), max(action_date), ‘1 day’::interval) as new_date
+From users
+Full outer join
+Select distinct user_id from users) t
+Left join
+Users
+On t.user_id =users.user_id
+)
+Group by 1
+Where datediff(new_date,action_date) >0
