@@ -8,3 +8,19 @@ Cities a
 Join cities b
 On a.city=b.city
 And datediff(b.date,a.date)=1
+
+Q2.
+
+Select case when weekday(date) 0 then ‘Monday’
+		when weekday(date) 1 then ‘Tuesday’
+		when weekday(date) 2 then ‘Wednesday’
+		when weekday(date) 3 then ‘Thursday’
+		when weekday(date) 4 then ‘Friday’
+		when weekday(date) 5 then ‘Saturday’
+		when weekday(date) 6 then ‘Sunday’
+		else NA
+		end as week
+, avg(price)
+From house_price
+Group by 1
+Order by 1
