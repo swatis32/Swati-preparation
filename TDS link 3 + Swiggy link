@@ -1,0 +1,48 @@
+https://towardsdatascience.com/2-tricky-sql-questions-you-might-be-asked-at-data-scientist-interviews-168f5226c023
+
+Q1. 
+
+
+Select a.date, a.city, a.temperature , b.temperature as next_temperature , a.temperature-b.temperature as temp_diff from 
+Cities a 
+Join cities b
+On a.city=b.city
+And datediff(b.date,a.date)=1
+
+Q2.
+
+Select case when weekday(date) 0 then ‘Monday’
+		when weekday(date) 1 then ‘Tuesday’
+		when weekday(date) 2 then ‘Wednesday’
+		when weekday(date) 3 then ‘Thursday’
+		when weekday(date) 4 then ‘Friday’
+		when weekday(date) 5 then ‘Saturday’
+		when weekday(date) 6 then ‘Sunday’
+		else NA
+		end as week
+, avg(price)
+From house_price
+Group by 1
+Order by 1
+
+Swiggy link
+https://medium.com/@mail2asimmanna/data-analyst-sql-questions-asked-in-swiggy-interview-dbe07b5e451f
+
+Q1. Calculate YoY growth rate for a user
+
+Select a.customer_id, b.yearly_amount/a.yearly_amount -1 as growth_rate
+From
+(Select customer_id, EXTRACT( year from purchase_date) as year, sum(purchase_amount) as yearly_amount from customer_purchases
+Group by 1, 2) a
+Join 
+(Select customer_id, EXTRACT( year from purchase_date) as year, sum(purchase_amount) as yearly_amount from customer_purchases
+Group by 1, 2) b
+On a. customer_id=b.customer_id
+And b.year=a.year+1
+
+Q2. Write an SQL query to select the Supplier_id, Product_id, and start date of the period when the stock quantity was below 50 units for more than two consecutive days.
+
+
+
+
+
