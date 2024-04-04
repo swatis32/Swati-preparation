@@ -42,6 +42,18 @@ And b.year=a.year+1
 
 Q2. Write an SQL query to select the Supplier_id, Product_id, and start date of the period when the stock quantity was below 50 units for more than two consecutive days.
 
+Select s.supplier_id, s.product_id, min (s.record_date)
+From supplier_inventory s join
+supplier_inventory p
+On s.supplier_id=p.supplier_id
+And s.product_id=p.product_id
+And s.stock<50 and p.stock<50
+And datediff (p.record_date,s.record_date)=1
+Group by 1, 2
+
+Q3.
+
+
 
 
 
