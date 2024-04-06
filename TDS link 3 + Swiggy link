@@ -51,7 +51,16 @@ And s.stock<50 and p.stock<50
 And datediff (p.record_date,s.record_date)=1
 Group by 1, 2
 
-Q3.
+Q3. Write an SQL query to select the Employee_id, Store_id, and a rank based on their Sale_amount for the year 2023, with 1 being the highest performing employee.
+
+Select employee_id, store_id, dense_rank() over (partition by  employee_id, store_id order by total_sale DESC) as rnk
+From
+(
+Select employee_id, store_id, sum(sale_amount) as total_sale
+From employee_sales
+Where sale year=‘2023’	
+Group by 1,2
+)t1
 
 
 
