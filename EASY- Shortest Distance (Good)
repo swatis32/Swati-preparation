@@ -9,8 +9,8 @@ The shortest distance is '1' obviously, which is from point '-1' to '0'. So the 
 | shortest|
 |---------|
 | 1       |
-Note: Every point is unique, which means there is no duplicates in table point.
-Follow-up: What if all these points have an id and are arranged from the left most to the right most of x axis?
+a) Note: Every point is unique, which means there is no duplicates in table point.
+b) Follow-up: What if all these points have an id and are arranged from the left most to the right most of x axis?
 
 Very good!!
 
@@ -21,3 +21,11 @@ FROM
         JOIN
     point p2 ON p1.x != p2.x
 ;
+
+b)
+select min ( abs( t2.x  - t1.x) )
+From
+(Select row_number() over (partition by x) as id, x from point) t1
+Join
+(Select row_number() over (partition by x) as id, x from point) t2
+Where t2.id!=t1.id
