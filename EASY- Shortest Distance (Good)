@@ -25,7 +25,7 @@ FROM
 b)
 select min ( abs( t2.x  - t1.x) )
 From
-(Select row_number() over (partition by x) as id, x from point) t1
+(Select row_number() over (order by x) as id, x from point) t1
 Join
-(Select row_number() over (partition by x) as id, x from point) t2
+(Select row_number() over (order by x) as id, x from point) t2
 Where t2.id!=t1.id
