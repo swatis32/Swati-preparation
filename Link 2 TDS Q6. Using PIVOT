@@ -1,0 +1,24 @@
+# Practice Link
+https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+
+Q.6 Write an SQL query to report how many units in each category have been ordered on each day of the week.
+
+Pivot examples : https://www.geeksforgeeks.org/pivot-and-unpivot-in-sql/
+
+Variation solution using PIVOT:
+
+Select item_category as Category,
+Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+
+From 
+(
+Select EXTRACT (‘dow’ from order_date) as weekday, item_category, quantity from
+Orders join
+Items
+On orders.item_id= items.item_id
+)
+
+PIVOT
+( sum(quantity) 
+For weekday in ( Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday )
+) as pvt
