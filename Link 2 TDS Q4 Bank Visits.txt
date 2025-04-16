@@ -5,17 +5,20 @@ Q4. Write an SQL query to find how many users visited
 the bank and didn’t do any transactions, how many visited the bank 
 and did one transaction and so on.
 
-#note: This is a variation solution
-# 2 transaction count not included in the answer. the transaction numbers need to exist
+#note: This is a variation solution 
+# 2 
+Select transaction_count, count( distinct (user_id) as visit count from
 
-select transaction_count, count(*) as visit_count from 
-(
+(Select user_id, visit_date, count(transaction_date) as transaction_count from visits
+Left join
 
-select visits.user_id, visits.visit_date, count(transactions.transaction_date) as transactions_count from visits left join transactions
-on visits.user_id=trnsactions.user_id and 
-visits.visit_date=transactions.transaction_date
-group by visits.user_id, visits.visit_date 
+(Select user_id, visit_date, transaction_date from visits --- These are all transactions
+join transactions
+On visits.user_id=transactions.user_id
+And visits.visit_date=transactions.visit_date) a
+On visits.user_id=a.user_id
+And a.visit_date=a.visit_date
+Group by 1,2
+)b
 
-)T1
-group by transaction_count
-				
+Group by 1
