@@ -1,5 +1,6 @@
 # Practice Link
 https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+https://medium.com/data-science/twenty-five-sql-practice-exercises-5fc791e24082
 
 
 1. Cancellation rates
