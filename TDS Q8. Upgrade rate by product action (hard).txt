@@ -7,55 +7,17 @@ decimal places, who accessed feature two (type: F2 in events table)
 and upgraded to premium within the first 30 days of signing up.
 
 
-select ROUND(SUM(case when premium_date-join_date <30 then 1
-		else 0 end)/count(*),2)
-		as rate
-FROM users join
+Select sum (case when datediff(join_date,p_date) <=30 then 1 else 0 end)/ (select count(*) from users)
+From 
 (
-select T1.user_id, premium_date from 
-
-(select user_id, access_date as f2_date where type='F2') T1
-left join
-(select user_id, access_date as premium_date where type='P') T2
-on T1.user_id=T2.user_id
-)
-T3
-on users.user_id=T3.user_id
-
-ANOTHER way!! 
------------------------------------------
-select ROUND(count(*)/ (select count(*) from users),2) as upgrade_rate from
-(
-(select user_id, (access_date-join_date) as F2_days from users join events
-							on users.user_id=events.user_id
-							where type='F2'
-							and F2_days <=30
-)T1
-
-join
-(
-select user_id, (access_date-join_date) as P_days from users join events
-							on users.user_id=events.user_id
-							where type='P'
-							and P_days <=30
-)T2
-on T1.user_id=T2.user_id
-)T3
-
-Method 3 most recent:
---------------------------------------------
-Select ROUND(sum (case when DATED_DIFF(p_access_date, join_date)<30 then 1 else 0 end)/ (select count(*) from users),2)
-FROM
-
-(Select user_id, join_date, type , p_access_date from
-Users join
-Events on users.user_id=events.user_id
-Where type in (‘P’)
-) as p
- Join
-(Select user_id, join_date, type , f2_access_date from
-Users join
-Events on users.user_id=events.user_id
-Where type in (‘F2’)
-)f2
-On p.user_id=f2.user_id
+(Select user_id , access_date as f2_date from
+Events
+Where type =‘F2’ )t1
+Join
+(Select user_id , access_date as p_date from
+Events
+Where type =‘P’)
+On t1.user_id=t2.user_id
+) t3
+Join users
+On users.user_id = t3.user_id
