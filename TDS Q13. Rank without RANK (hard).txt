@@ -7,3 +7,9 @@ In other words, there should be no "holes" between ranks. (This is the real leet
 
 Ans
 select score, dense_rank()OVER(order by score DESC) as score_rank from scores				
+
+Another way 
+
+Select  score, (select count (distinct s1.score) from scores s1 where s1.score>=score) 
+From scores
+Order by score DESC
