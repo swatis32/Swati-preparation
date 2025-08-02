@@ -10,7 +10,9 @@ On a.city=b.city
 And datediff(b.date,a.date)=1
 
 Q2.
-
+-----------------------
+using weekday()
+------------------------
 Select case when weekday(date) 0 then ‘Monday’
 		when weekday(date) 1 then ‘Tuesday’
 		when weekday(date) 2 then ‘Wednesday’
@@ -24,6 +26,12 @@ Select case when weekday(date) 0 then ‘Monday’
 From house_price
 Group by 1
 Order by 1
+-------------------
+using dayname()
+--------------------- 
+select dow, avg(price) from
+(select dayname(date) as dow , price from melb ) t1
+group by 1
 
 Swiggy link
 https://medium.com/@mail2asimmanna/data-analyst-sql-questions-asked-in-swiggy-interview-dbe07b5e451f
