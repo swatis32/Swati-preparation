@@ -74,7 +74,7 @@ Q4. Write an SQL query to select the Passenger_id and Departure_airport_code for
 
 Select passenger_id, departure_airport_code
 From passenger_flights.flight_id=flight_details.flight_id
-Where (EXTRACT( YEAR from departure_date) - EXTRACT (YEAR from CURDATE()) )<=1
+Where (EXTRACT( YEAR from CURDATE()) - EXTRACT (YEAR from departure_date ) ) in (0,1)
 Group by 1,2
 Having count(*)>10
 
