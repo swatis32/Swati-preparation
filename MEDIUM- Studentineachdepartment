@@ -60,7 +60,7 @@ order by student_number desc, d.dept_name asc
 
 OR
 
-Select dept_name, count(*) from department left join student 
+Select dept_name, count(distinct student_id) from department left join student 
 on student.dept_id=department.dept_id group by dept_name order by count(*) DESC, order by dept_name ASC
 
 
