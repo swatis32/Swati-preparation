@@ -54,3 +54,41 @@ abs(
 (select sum(v2.freq) from v v2 where v2.salary >= v.salary)
 )
 
+-------------------------------------------------------------------------------------
+Some Ways to calculate median: 
+Assume table is employee and column is salary for 1 and 2 
+Assume table is employee and column is salary, frequency for 3
+
+
+Frequency not provided
+1. Select percentile_approx(salary, 0.5) from employee
+
+2. 
+
+With t1 as 
+
+(select avg (salary) as result, ‘even’ as type from 
+
+(Select salary, row_number()over( order by salary) as rnk from employee ) t1
+
+Where rnk in ( select count(*)/2, count(*)/2+1 from employee)					)
+Union all
+select avg (salary) as result , ‘odd’ as type from 
+
+	(Select salary, row_number()over( order by salary) as rnk from employee ) t1
+
+						Where rnk in ( select (count(*)+1)/2 from employee)
+)
+
+Select case when mod(count (*),2)=0 then (select result from t1 where type=‘even’)
+		else (select result from t1 where type=‘odd’)
+		end as median
+From employee 
+
+3.
+Frequency provided
+Select max(salary) from
+
+(Select salary , count(*) as n, sum(frequency) over (order by salary) as cumsum from employee)
+
+Where cumsum <= n/2
