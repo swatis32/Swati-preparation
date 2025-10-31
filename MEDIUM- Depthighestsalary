@@ -33,37 +33,3 @@ Department on Employee.departmentId=Department.Id) T1
 Where rnk=1
 
 
-LATEST ANSWER BY SWATI 4/4/2021:
-SELECT dept, Name, Salary from Employee join
-(SELECT Department.Name as dept, max( salary) as max_sal, min(id) as departmentID
-		       		FROM Department LEFT JOIN employee ON
-				Department.Id= Employee.DepartmentId
-				group by Department.Name) as T
-ON
-Employee.salary=T.max_sal AND
-Employee.DepartmentId=T.departmentID
-
-
-
-#This is a 3 join problem 
-select e.name,e.salary,d.dept_name from employee e join department d
-on e.id=d.department_id
-join (select dept_id, max(salary) as dept_max from employee group by dept_id) as dept_salary_table
-on d.department_id=dept_salary_table.department_id
-where e.salary=dept_salary_table.salary
-
-
-
-select d.Name as 'Department, e.Name as 'Employee', e.Salary as 'Salary' from Employee e left join Department d on e.DepartmentId=d.Id
-group by e.DepartmentId order by Salary desc limit 1
-
-OR
-select d.Name as 'Department, e.Name as 'Employee', e.Salary as 'Salary' from Employee, Department d ,
-(select max(e2.salary) as salary, e2.DepartmentId from Employee e2 group by e2.Department Id) as s where
-e.DepartmentId=d.Id and
-s.salary=e.salary and
-s.DepartmentId= e.DepartmentId
-
-OR
-
-Select Department.Name as department , Employee.Name as Employee, max(Salary) from Department left join Employee on Employee.DepartmentId=Department.Id  group by Department 
