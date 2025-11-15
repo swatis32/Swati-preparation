@@ -1,0 +1,26 @@
+https://www.hackerrank.com/challenges/challenges/problem?isFullScreen=true
+
+select  hacker_id, name, challenges from 
+(
+select hacker_id, name, challenges, dense_rank()over(order by challenges DESC) as rnk from
+(select h.hacker_id, name, count(distinct challenge_id) as challenges from hackers h 
+                                                            join challenges c
+                                                            on h.hacker_id=c.hacker_id
+                                                            group by 1,2
+) t
+)t1
+where rnk=1
+UNION
+select  max(hacker_id), max(name), challenges from 
+(
+select hacker_id, name, challenges, dense_rank()over(order by challenges DESC) as rnk from
+(select h.hacker_id, name, count(distinct challenge_id) as challenges from hackers h 
+                                                            join challenges c
+                                                            on h.hacker_id=c.hacker_id
+                                                            group by 1,2
+) t
+)t1
+where rnk>1
+group by challenges
+having count(*)=1
+order by challenges DESC, hacker_id
