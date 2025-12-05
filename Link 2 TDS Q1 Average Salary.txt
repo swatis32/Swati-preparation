@@ -8,15 +8,19 @@ average salary of employees in a department to the company’s average salary.
 
 
 
-select distinct pay_month, department_id, CASE when dept_avg>company_avg then 'higher'
-					       when dept_avg<company_avg then 'lower'
-					       else 'same'
-					       end as comparison
-from
+select distinct pay_month, dep_id , case when dep_avg > company avg then 'higher'
+				   when dep_avg < company avg then 'lower'
+					else 'same' end as status from
 (
-select department_id, left(pay_date,7) as pay_month, AVG(amount) OVER(partition by department_id,left(pay_date,7) ) as dept_avg,
-						     AVG(amount) OVER(partition by left(pay_date,7) ) from salary join employee) as company_avg on
-						     salary.employee_id=employee.employee_id
-)T1
-						      
+
+select  concat(extract(year from pay_date), '-', extract(month from pay_date)) as pay_month, dep_id, 
+avg(amount)over(partition by dep_id,  concat(extract(year from pay_date), '-', extract(month from pay_date))) as dep_avg,
+avg(amount)over(partition by  concat(extract(year from pay_date), '-', extract(month from pay_date))) as company_avg,
+
+ from
+salary s join department dep
+on s.employee_id=dep.employee_id
+
+) t1
+
 
