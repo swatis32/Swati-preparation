@@ -5,6 +5,7 @@ Q4. Write an SQL query to find how many users visited
 the bank and didn’t do any transactions, how many visited the bank 
 and did one transaction and so on.
 
+
 #note: This is a variation solution 
 # 2 
 Select transaction_count, count( distinct (user_id) as visit count from
@@ -22,3 +23,22 @@ Group by 1,2
 )b
 
 Group by 1
+
+------------------- Another way----------------------------------------------------
+
+select transations as transaction_count, sum(visits) as visit_count
+from
+(
+select visit_date, count(user_id) as visits, count(amount) as transactions
+from
+(
+select user_id, visit_date , amount from vists v left join
+					transacions t
+					on. v.user_id=t.user_id
+					and v.visit_date= t.visit_date
+)t1
+) t2
+group by 1
+
+
+
