@@ -7,12 +7,11 @@ Write an SQL query to report the students (student_id, student_name) being
 “quiet” in ALL exams. A “quite” student is the one who took at least one exam and didn’t score neither 
 the high score nor the low score.				      
 
-select student_id, student_name from student where student_id not in
+select student_id, student_name from
+(
+select student_id, student_name, score, max(score) over(partition by exam_id) as min_score, min(score) over(partition by exam_id) as max_score
+from student s join exam e
+on s.student_id= exam.student_id
+) t1
+where (score!=max_score or score!=min_score)
 
-(
-select student_id from 
-(
-select exam_id, student_id, RANK() over( partition by exam_id order by score ) as min_rank, RANK() over( partition by exam_id order by score DESC ) as max_rank
-																from exam id
-)T1 where min_rank=1 or max_rank=1
-)
