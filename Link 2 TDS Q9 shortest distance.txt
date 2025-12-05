@@ -6,12 +6,17 @@ rounded to 2 decimals.
 
 ### Very good
 
-Key Difference:
-The fundamental difference is that INNER JOIN uses a specific condition to filter the combinations generated, while a CROSS JOIN without a WHERE clause produces all possible combinations without any filtering based on relationships between the rows. If a WHERE clause is added to a CROSS JOIN, it can effectively mimic the behavior of an INNER JOIN by filtering the Cartesian product. However, using an INNER JOIN with an ON clause is generally preferred for clarity and often for performance, as it explicitly defines the relationship.
+Key Difference between inner join and cross join on same table:
+
+The fundamental difference is that INNER JOIN uses a specific condition to filter the combinations generated,
+while a CROSS JOIN without a WHERE clause produces all possible combinations without any filtering based on relationships
+between the rows. If a WHERE clause is added to a CROSS JOIN, it can effectively mimic the behavior of an INNER JOIN by filtering the Cartesian product.
+However, using an INNER JOIN with an ON clause is generally preferred for clarity and often for performance, as it explicitly defines the relationship.
 
 ### note the use of cross join here
 
 select   MIN( round(sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2)),2)) as shortest from points p1 cross join points p2
 
 							where p1.x!=p2.x OR p1.y!=p2.y
+
 
