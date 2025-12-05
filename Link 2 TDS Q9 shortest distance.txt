@@ -4,5 +4,8 @@ https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-3
 Q9. Write a query to find the shortest distance between these points 
 rounded to 2 decimals.
 
-select   MIN( round(sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2)),2)) as shortest from points p1, points p2
+### note the use of cross join here
+
+select   MIN( round(sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2)),2)) as shortest from points p1 cross join points p2
+
 							where p1.x!=p2.x OR p1.y!=p2.y
