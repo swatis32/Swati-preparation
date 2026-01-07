@@ -12,7 +12,7 @@ Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
 
 From 
 (
-Select EXTRACT (‘dow’ from order_date) as weekday, item_category, quantity from
+Select dayname(order_date) as weekday, item_category, quantity from
 Orders join
 Items
 On orders.item_id= items.item_id
