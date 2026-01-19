@@ -33,6 +33,20 @@ For 3 --> 3's freq 1 >= abs(3-2) -- is true, so 3 WILL be a candidate for a medi
 For 4 --> 4's freq 1 >= abs(4-1) -- is false, so 4 wont be a candidate for a median
 Now we have 2 candidates for the median -- 2 and 3, so we average these two and return 2.5
 1,2,3,4 --> median is 2.5
+
+2. Method when freq not provided
+
+select case when mod(count(*),2)=0 then 
+				( select avg (number) from 
+					(select  number, row_number()over(order by number) as rnk from table) t1
+					where rnk in ( select count(*)/2, count(*)/2+1 from table)
+				)
+	when mod(count(*),2)!=0 then 
+				( select avg (number) from 
+					(select  number, row_number()over(order by number) as rnk from table) t2
+					where rnk in ( select (count(*)+1)/2 from table)
+				) end as median
+from table
                                   
                                   
                    
