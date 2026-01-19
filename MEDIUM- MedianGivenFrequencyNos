@@ -9,6 +9,8 @@ where n.Frequency >= abs((select sum(Frequency) from Numbers where Number<=n.Num
                          (select sum(Frequency) from Numbers where Number>=n.Number))
 
 
+Check below: This is a good solution for even and odd number of n!!!
+
 what we're doing here is that we're taking the absolute difference of the sum of frequencies of numbers to the left and right
 
 For 1 --> 1's freq 5 >= abs(5-35) -- is false, so 1 wont be a candidate for a median
