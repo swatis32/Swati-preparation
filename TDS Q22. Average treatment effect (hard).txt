@@ -14,8 +14,10 @@ FROM
 (Select assignment, avg(outcome) as mean, std(outcome) as stdev, count(*) as n from 
 Study group by 1
 Where assignment =0) C
-Union 
+join 
 (Select assignment, avg(outcome) as mean , std(outcome) as stdev, count(*) as n from 
 Study group by 1
 Where assignment =1) T
-) CT
+) T
+on C.assignment!=T.assignment
+
