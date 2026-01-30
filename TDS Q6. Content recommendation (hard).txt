@@ -5,23 +5,6 @@ https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
 Using the following two tables, write a query to return page recommendations to a social media user based on the pages 
 that their friends have liked, but that they have not yet marked as liked. Order the result by ascending user ID. 
 
-select likes.user_id, friend_page_like from likes right join
-(
-select user_id, DISTINCT friend_page_like from
-
-(select user_id,friend_id, page_like as friend_page_like from friends join likes
-on friends.friends_id=likes.user_id) T1
-group by user_id
-)T2
-
-on likes.user_id=T2.user_id
-and likes.page_likes=T2.friend_likes
-where likes.page_likes IS NULL
-order by likes.user_id
-
-
-New solution 3/7: 
-----------------------
 Select distinct user, friend_likes as recommended_page likes from
 
 (Select user, page_likes as friend_likes
@@ -33,3 +16,4 @@ Where CONCAT(user,friend_likes) not in
 
 (Select CONCAT(user, page_likes) from likes)
 order by 1
+
