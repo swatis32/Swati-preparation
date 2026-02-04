@@ -18,4 +18,6 @@ Select receiver as user, date, amount*-1 as amount from transact
 )
 ) T1
 Where rank=1
+order by nw DESC
+
 
