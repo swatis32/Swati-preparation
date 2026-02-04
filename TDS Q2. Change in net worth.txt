@@ -7,19 +7,6 @@ https://medium.com/data-science/twenty-five-sql-practice-exercises-5fc791e24082
 From the following table of transactions between two users, write a query to return the change in net worth for each user, ordered by decreasing net change.
 My solution:
 
-select T2.receiver, (received-sent) as nw from
-
-(select sender, amount as sent from transactions
-group by sender) T1
-
-join
-
-(select receiver, amount as received from transactions
-group by receiver)
-on T1.sender=T2.receiver
-order by nw DESC
-
----- Another way using window fucnction (not super efficent, but works)
 
 Select user, nw from 
 (
@@ -31,3 +18,4 @@ Select receiver as user, date, amount*-1 as amount from transact
 )
 ) T1
 Where rank=1
+
