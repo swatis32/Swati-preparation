@@ -1,5 +1,6 @@
 # Practice Link
 https://towardsdatascience.com/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
+https://medium.com/data-science/10-problems-to-practice-almost-all-sql-concepts-37545e7c5219
 
 Q2. Quiet student
 
@@ -14,4 +15,5 @@ from student s join exam e
 on s.student_id= exam.student_id
 ) t1
 where (score!=max_score or score!=min_score)
+
 
