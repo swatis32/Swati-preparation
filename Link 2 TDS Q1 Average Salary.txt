@@ -8,6 +8,26 @@ result (higher/lower/same) of the
 average salary of employees in a department to the company’s average salary.
 
 
+select t1.pay_month , t1.department_id, case when dep_sal > overall_sal then 'higher'
+					     when dep_sal < overall_sal then 'lower'
+					     else 'same'
+						end as comp
+from
+
+(select concat(extract (year from pay_date)- extract(month from pay_date)) as pay_month, department_id, avg(salary) as dep_sal
+from salary join
+department on
+salary.employee_id=department.employee_id
+group by 1, 2
+) t1
+join
+(select concat(extract (year from pay_date)- extract(month from pay_date)) as pay_month, avg(salary) as overall_sal from 
+salary 
+group by 1
+) t2
+on t1. pay_month= t2.pay_month
+
+----------------- Using window function ----------------------------
 
 select distinct pay_month, dep_id , case when dep_avg > company avg then 'higher'
 				   when dep_avg < company avg then 'lower'
@@ -23,6 +43,7 @@ salary s join department dep
 on s.employee_id=dep.employee_id
 
 ) t1
+
 
 
 
