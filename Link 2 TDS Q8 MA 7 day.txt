@@ -5,7 +5,7 @@ Q7.  Write an SQL query to compute moving average of how
 much customer paid in a 7 days 
 window (current day + 6 days before)
 
-
+Note: order by is first! then ROWS BETWEEN
 
 select visited_on, SUM(amount) OVER( order by visited_on ROWS BETWEEN 6 PRECEEDING AND CURRENT ROW), ROUND(AVG(amount) OVER(order by visited_on ROWS BETWEEN 6 PRECEEDING AND CURRENT ROW),2) as average_amount from
 (
@@ -14,4 +14,5 @@ select visited_on, sum(amount) as amount from customer
 )T1
 
 order by visited_on OFFSET 6 ROWS
+
 
