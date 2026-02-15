@@ -5,10 +5,12 @@ Q7. Write an SQL query to find employees who earn the top
 three salaries in each of the department. For the above tables, your SQL query should 
 return the following rows (order of rows does not matter).	
 
-select Department, Employee, Salary from 
+select depatment, employee, salary from 
 (
-select Department.Name as Department, Employee.Name as Employee, Salary , DENSE_RANK() OVER(partition by Department order by salary DESC) from employee join department 
-																 on employee.department_id=department.Id
-)T1
-where rank <=3
+select e.name as employee, salary, d.name as department, dense_rank() over( partition by d.name order by salary DESC) as rnk from employee e
+join department d
+on e.departmentId=d.id
+) t
+where rnk <=3
+
 
