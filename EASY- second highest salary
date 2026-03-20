@@ -17,6 +17,13 @@ For example, given the above Employee table, the query should return 200 as the 
 | 200                 |
 +---------------------+
 
+window function:
+Select salary from 
+    (Select salary, dense_rank() over( order by salary DESC) as rnk from
+        Employee) t1
+Where rnk=2
+
+another way: 
 SELECT
     IFNULL(
       (SELECT DISTINCT Salary
