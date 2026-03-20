@@ -1,0 +1,28 @@
+This is an important knowledge share doc. We know how to code in SQL well now, but when it comes to writing the query in Python we can work on it.
+
+
+1. Windows Function:
+
+SQL:
+
+select *, rank() over(partition by category order by sales DESC) as rnk
+from products 
+
+Python:
+
+df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).groupby(['category']).cumcount()+1
+
+2. Mapping: 
+
+- select : df.loc[:,['col0','col1']
+- where :  df.loc[df['col']>10]
+- group by : df.groupby('col').agg(['mean','sum','min','max','nunique']
+- join : df1.merge(df2, how='inner', on='a')
+- limit : df.head(n)
+
+
+
+3. How to rename columns? 
+df.groupby('team').agg(sum_points=('points', 'sum'),
+                       mean_assists=('assists', 'mean'),
+                       max_rebounds=('rebounds', 'max'))
