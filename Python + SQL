@@ -18,6 +18,8 @@ df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).gr
 - where :  df.loc[df['col']>10]
 - group by : df.groupby('col').agg(['mean','sum','min','max','nunique']
 - join : df1.merge(df2, how='inner', on='a')
+         df1.merge(df2, how='left', left_on='department_id', 
+                         right_on='id')
 - limit : df.head(n)
 
 
