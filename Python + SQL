@@ -25,6 +25,11 @@ df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).gr
 
 
 3. How to rename columns? 
+3.1
 df.groupby('team').agg(sum_points=('points', 'sum'),
                        mean_assists=('assists', 'mean'),
                        max_rebounds=('rebounds', 'max'))
+
+3.2
+df_agg= df.groupby('col').agg(['mean','sum'])
+df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
