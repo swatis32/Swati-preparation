@@ -32,3 +32,9 @@ select customers.name as Customers
 from customers 
 where customers.id not in 
 (select customerid from orders)
+
+
+Python-----
+df=Customers.merge(orders, how=‘inner’, left_on=‘id’, right_on=‘customerId’)
+
+customers[~customers[‘name’].isin(df['name']), ['name']]
