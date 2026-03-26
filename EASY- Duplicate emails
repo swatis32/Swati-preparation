@@ -17,6 +17,11 @@ For example, your query should return the following for the above table:
 | a@b.com |
 +---------+
 
+select email from person 
+group by 1
+having count(*)>1
 
-select Email from
-(select Email, count(Email) as counts from Person)  as intermediate where counts >1
+Python
+
+grouped_df= Df.groupby([‘email’]).agg([‘count’])
+grouped_df[grouped_df[‘count]>1, ‘email’]
