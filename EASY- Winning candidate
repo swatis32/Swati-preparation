@@ -33,31 +33,21 @@ Notes:
 You may assume there is no tie, in other words there will be at most one winning candidate.
 
 My solution:
-1.
-select name from candidate where id in 
-(select candidateid from vote group by candidateid order by count(*) desc limit 1 )
 
-2. Similar to Abhinav's but making sure order by is done later as sometimes it does not work on views 
-Select Name from Candidate join
-(Select candidateId, count(*) as votes from Vote 
-group by candidateId) T1
-      on Candidate.candidateId=T1.candidateId
-	order by votes desc
-      limit 1
+Select name from 
+Candidates join
+Vote 
+On candidates.id=vote.candidate_id
+Group by 1
+Order by count(*) DESC
+LIMIT 1
 
 
-Abhinav file:
-SELECT
-    name AS 'Name'
-FROM
-    Candidate
-        JOIN
-    (SELECT
-        Candidateid
-    FROM
-        Vote
-    GROUP BY Candidateid
-    ORDER BY COUNT(*) DESC
-    LIMIT 1) AS winner
-WHERE
-    Candidate.id = winner.Candidateid
+Python:
+
+df= candidates.merge(vote , how='inner', left_on='id', right_on='candidate_id')
+df_grouped=df.groupby['name'].agg(['count'])
+df_sorted=df_grouped.sort_values(by=['count'], ascending=['False'])
+df_sorted['name'][0]
+
+
