@@ -28,3 +28,4 @@ df.loc[df['sex']==m,'gender']='f'
 df.loc[df['sex']==f,'gender']='m'
 
 df['sex']= df['gender']
+df=df.drop('gender', axis=1)
