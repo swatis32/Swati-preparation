@@ -16,22 +16,17 @@ df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).gr
 
 - select : df.loc[:,['col0','col1']
 - where :  df.loc[df['col']>10]
-- group by : df.groupby('col', as_index=False).agg(['mean','sum','min','max','nunique']
+- group by : df.groupby('col', as_index=False)['col2'].agg(['mean','sum','min','max','nunique']
+Note 'col' is the group by col and 'col2' is the numerical values for the operation
+
 - join : df1.merge(df2, how='inner', on='a')
          df1.merge(df2, how='left', left_on='department_id', 
                          right_on='id')
 - limit : df.head(n)
 
-
-
 3. How to rename columns? 
-3.1
-df.groupby('team', as_index=False).agg(sum_points=('points', 'sum'),
-                       mean_assists=('assists', 'mean'),
-                       max_rebounds=('rebounds', 'max'))
 
-3.2
-df_agg= df.groupby('col', as_index=False).agg(['mean','sum'])
+df_agg= df.groupby('col', as_index=False)['col2'].agg(['mean','sum'])
 df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
 
 4. You need to use as_index=False in groupby so that the result is a data frame, by default it is not
