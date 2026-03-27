@@ -19,7 +19,7 @@ df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).gr
 - group by : df.groupby('col', as_index=False)['col2'].agg(['mean','sum','min','max','nunique']
 Note 'col' is the group by col and 'col2' is the numerical values for the operation
 or do this simply:
-df.groupby(['col']).agg(sum_col2=('col2','sum'), mean_col1=('col1' , 'mean'))
+df.groupby(['col'], as_index=False).agg(sum_col2=('col2','sum'), mean_col1=('col1' , 'mean'))
 
 - join : df1.merge(df2, how='inner', on='a')
          df1.merge(df2, how='left', left_on='department_id', 
