@@ -46,8 +46,8 @@ LIMIT 1
 Python:
 
 df= candidates.merge(vote , how='inner', left_on='id', right_on='candidate_id')
-df_grouped=df.groupby['name', as_index=False].agg(['count'])
-df_sorted=df_grouped.sort_values(by=['count'], ascending=['False'])
+df_grouped=df.groupby('name', as_index=False)['name'].agg(['count'])
+df_sorted=df_grouped.sort_values(by=['count'], ascending=[False])
 df_sorted['name'][0]
 
 
