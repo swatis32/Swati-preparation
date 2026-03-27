@@ -27,7 +27,7 @@ Note 'col' is the group by col and 'col2' is the numerical values for the operat
 3. How to rename columns? 
 
 3.1
-aggregated_data = df.groupby(['Category', 'Subcategory']).agg(
+aggregated_data = df.groupby(['Category', 'Subcategory'], as_index=False).agg(
     Sales_Sum=('Sales', 'sum'),
     Quantity_Mean=('Quantity', 'mean'),
     Sales_Max=('Sales', 'max')
