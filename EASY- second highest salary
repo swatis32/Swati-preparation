@@ -33,6 +33,10 @@ SELECT
     NULL) AS SecondHighestSalary
 
 Now with python(Good!) :
-
+1.
 df[‘rank’]=Df.sort_values(by=‘salary’, ascending=‘False).cumsum()+1
 df.loc[df[‘rank’]=2,[‘salary’]
+
+2.
+df_sorted=Df.sort_values(by=[‘salary’], ascending=‘False’]
+df_sorted[‘salary’][1]
