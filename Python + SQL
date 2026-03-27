@@ -26,6 +26,14 @@ Note 'col' is the group by col and 'col2' is the numerical values for the operat
 
 3. How to rename columns? 
 
+3.1
+aggregated_data = df.groupby(['Category', 'Subcategory']).agg(
+    Sales_Sum=('Sales', 'sum'),
+    Quantity_Mean=('Quantity', 'mean'),
+    Sales_Max=('Sales', 'max')
+)
+
+3.2 
 df_agg= df.groupby('col', as_index=False)['col2'].agg(['mean','sum'])
 df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
 
