@@ -28,5 +28,15 @@ Sample Output
 | 3               |
 
 
-select customer_number as num_orders from orders group by customer_number order by count(*) desc limit 1
+Select customer_number from orders
+Group by 1
+Order by count(order_number) DESC
+LIMIT 1
+
+Python:
+
+df_grouped=Df.groupby ([‘customer_id’], as_index=False).agg(count_orders=(‘order_number’, ‘count’))
+
+df_sorted=df_grouped.sort_values(by=‘count_orders’, ascending=False)
+df_sorted[‘customer_id’][0]
 
