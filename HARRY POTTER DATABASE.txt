@@ -76,23 +76,95 @@ Q7. List all unrequited followings (i.e. where A follows B but B does not follow
 
 	
 
+--------------------------------------- Answers with SQL + Python
+
+1. How many users in each house ?
+
+Select house, count(user_id) as num_users from users
+Group by 1
+
+Python
+
+users.groupby([‘house’], as_index=False).agg(num_users=(‘user_id’, ‘count’)
+
+2. Select following links created before Sep 1 1993.
+
+Select user_id, follows from follower
+Where date_created < ’1993-09-01’
+
+Python
+
+follower.loc[follower[‘date_created’]<’1993-09-01’, [‘user_id’, ‘follows’]]
+
+3. List all following links that were created before September 1st, 1993, specify first name
+
+Select user_first_name, follower_first_name from 
+
+(Select first_name as user_first_name , follows, date_created from users
+Join follower
+On user.user_id = follower.user_id
+) t
+Join users
+On t.follow=users.user_id
+And date_created < ’1993-09-01’
+
+Python:
+
+df_merged1= users.merge(follower, how=‘inner’, on=‘user_id’)
+df_merged1[‘user_first_name’]=df_merged1[‘first_name’]
+df_merged1=df_merged1.drop(‘first_name’, axis=1)
+
+df_merged2=users.merge(df_merged1, how=‘inner’, left_on=‘user_id’, right_on=‘follows’)
+df_merged2[‘first_name_follower’]=df_merged2[‘first_name’]
+df_merged2=df_merged2.drop(‘first_name’, axis=1)
+
+df_merged2.loc[df_merged2[‘date_created]<’1993-09-01’,[‘user_first_name’,’first_name_follower’]
+
+4.
+Give a count of how many people followed each user as of 1999–12–31. Give the result in term of “user full name, number of followers”
+
+Select concat (first_name, last_name) as user_full_name, number_of_followers from
+
+(Select follows, count(user_id) as number of followers from follower
+Where date_created < ’1999-12-31’
+Group by 1) t
+Join
+Users
+On users.user_id=t.follows
+Order by number_of_followers DESC
 
 
+5. select user_id, count(follows) from follower
+Group by 1
+Order by count(follows) DESC
+
+Q6. Select all rows from where user from one house follows someone from another house. Give first names and house of each 
 
 
+Select user_first_name, user_house_name, first_name as follower_first_name  house_name as follower_house_name from
 
+(Select first_name as user_first_name , house_name as user_house_name, follows, date_created from users
+Join follower
+On user.user_id = follower.user_id
+) t
+Join users
+On t.follow=users.user_id
+Where user_house_name != house_name
 
+Q7. List all unrequited followings (i.e. where A follows B but B does not follow A)
 
+Select concat (user_id , follows )from follower where concat (user_id , follows ) not in 
+( select valid_pair from
 
+(Select concat (user_id , follows ) as valid_pair , concat(follows, user_id) as inverse_pair
+from follower ) t1
 
+Join
 
+(Select concat (user_id , follows ) as pair from follower) as t2
+On t1.inverse_pair= t2.pair
+)
 
-
-
-
-
-
-Q5. 
 
 
 
