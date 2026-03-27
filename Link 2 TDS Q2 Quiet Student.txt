@@ -30,4 +30,9 @@ On t1. exam_id= t2.exam_id
 And (t1.score!= max_score or t1.score!=min_score)
 
 
+Python:
 
+df= student.merge(exam, how=‘inner’, on=’student_id)
+exam_t= exam.groupby([‘exam_id’], as_index=‘False).agg(min_score=(‘score’,’min’), max_score=(‘score’, ‘max’))
+df_merged=df.merge(exam_t, how=‘inner’, on=‘exam_id’)
+df_merged.loc[df[‘score’]!=df[‘max_score’] | df[‘score’]!=df[‘min_score’], [’student_id’,’student_name’]]
