@@ -27,6 +27,19 @@ group by 1
 ) t2
 on t1. pay_month= t2.pay_month
 
+Python
+
+df= employee.merge(department , how =‘inner’, on=‘employee_id)
+df[‘pay_month]=df[‘pay_date’].dt.strftime('%Y-%m')
+df_grouped1=Df.groupby([‘pay_month’], as_index=False).agg(company_mean=(’amount’, ‘mean’)
+df_grouped2=Df.groupby([‘pay_month’,’dep_id’], as_index=False).agg(dep_mean=(’amount’, ‘mean’)
+df_merged= df_grouped1.merge(df_grouped2 , how =‘inner’, on=‘pay_month)
+df_merged[‘comparison’]= ‘Same’
+df_merged.loc[df_merged[‘dep_sal’]>df[‘company_sal’],[‘comparison’]]=‘higher’
+df_merged.loc[df_merged[‘dep_sal’]<df[‘company_sal’],[‘comparison’]]=‘lower’
+
+Df.loc[:,[‘pay_month’,’dep_id’,’comparison’]
+
 ----------------- Using window function ----------------------------
 
 select distinct pay_month, dep_id , case when dep_avg > company avg then 'higher'
@@ -43,7 +56,6 @@ salary s join department dep
 on s.employee_id=dep.employee_id
 
 ) t1
-
 
 
 
