@@ -20,3 +20,12 @@ select   MIN( round(sqrt(pow(p1.x-p2.x,2)+pow(p1.y-p2.y,2)),2)) as shortest from
 							where p1.x!=p2.x OR p1.y!=p2.y
 
 
+Python
+Note 1.) in cross join you dont specify left_on, right_on ...
+2.) _x is left table , _y is right table
+
+
+df=points.merge(points , how='cross')
+df_valid=df.loc[(x_x!=x_y) |( y_x!=y_x),:]
+df_valid['dist']=sqrt((df['x_x']-df['x_y'])**2 + (df['y_x']-df['y_y'])**2)
+min(df['dist'])
