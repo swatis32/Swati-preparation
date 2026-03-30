@@ -16,3 +16,8 @@ select visited_on, sum(amount) as amount from customer
 order by visited_on OFFSET 6 ROWS
 
 
+Python
+
+df= customer.groupby(['visited_on'], as_index='False).agg(sum_amount=('amount', 'sum'))
+df['ma_sum']=df['sum_amount'].rolling(window=7).sum()
+df['ma_avg']=df['sum_amount'].rolling(window=7).mean()
