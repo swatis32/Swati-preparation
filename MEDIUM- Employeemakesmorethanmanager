@@ -16,7 +16,14 @@ Given the Employee table, write a SQL query that finds out employees who earn mo
 | Joe      |
 +----------+
 
+Select distinct s1.name from
+Salary s1
+Join salary s2
+On s2.id= s1.managerId
+And s1.salary > s2.salary
 
-#e1 Manager id should be an employee row in e2 table
+Python
 
-select e1.Name from employee e1, employee e2 where e1.Salary>e2.Salary and e1.ManagerId= e2.Id
+df=salary.merge(salary, how=‘inner’, left_on=‘manager_id’, right_on=‘id’)
+df.loc[df[‘salary_x’]>df[‘salary_y’],[‘name_x’].unique()
+
