@@ -23,3 +23,8 @@ For example, after running your query, the above Person table should have the fo
 delete from Person where id not in
 (select * from
 (select min(id) from Person group by email) as A)  
+
+Python
+
+df['rank']=df.sort_values(by=['email','id'], ascending=([True,True])).groupby(['email']).cumcount()+1
+df=df.loc[df['rank']==1,:]
