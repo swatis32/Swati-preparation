@@ -25,11 +25,19 @@ Write a SQL query to find employees who have the highest salary in each of the d
 | Sales      | Henry    | 80000  |
 +------------+----------+--------+
 
-LATEST ANSWER BY SWATI USING WINDOWS FUNCTION 6/7/2021:
-
-Select Department, Employee, Salary from
-(Select department.Name as Department, Employee.Name as Employee, Salary, rank() OVER(partion by department.Name as Department order by Salary DESC) as rnk from Employee join
-Department on Employee.departmentId=Department.Id) T1
+Select department_name, employee_name, salary from
+(
+Select e.name as employee_name, d.name as department_name, salary, dense_rank()over(partition by d.name order by salary DESC) as rnk
+from 
+Employee e join department d
+On e.department_id=d.id
+) t1
 Where rnk=1
 
+Python
+
+df= employee.merge(department, how=‘inner’, left_on=‘department_id’ , right_on=Id’]
+df[‘rank’]=df.sort_values(by=[‘department_id’, ‘salary’], ascending=[True, False]).groupby(‘department_id’).cumcount()+1
+result=Df.loc[df[‘rank’]==1,[‘name_y’, ‘name_x’, ‘salary’]
+result.rename(columns={‘name_y’:’department_name’, ‘name_x’:’employee_name’})
 
