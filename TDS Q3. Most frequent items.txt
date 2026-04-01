@@ -14,3 +14,9 @@ group by date, item
 ) T1
 ) T2
 where rnk=1
+
+Python
+
+df_grouped=Df.groupby([‘date’,’item’], as_index=‘False’).agg(frequency=(‘item’,’count’)
+df_grouped[‘rank’]=df_grouped.sort_values(by=[‘date’,’frequency’], ascending=[True, False]).groupby(‘date’).cumcount()+1
+df_grouped.loc[df_grouped[‘rank’]==1,[‘date’,’item’]] 
