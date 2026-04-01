@@ -40,3 +40,7 @@ df_agg= df.groupby('col', as_index=False)['col2'].agg(['mean','sum'])
 df_agg=df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
 
 4. You need to use as_index=False in groupby so that the result is a data frame, by default it is not
+
+5. How do we do not in  ?
+
+customers[~customers[‘name’].isin(df['name']), ['name']]
