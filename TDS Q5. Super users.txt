@@ -15,3 +15,13 @@ where rnk=2
 ) T2
 on users.user_id=T2.user_id
 order by super_user_date
+
+Python
+
+df[‘rank’]=Df.sort_values(by=[‘user_id’,’transaction_date’], ascending=[True, False]).groupby(‘user_id’).cumcount()+1
+df_rank2=df.loc[df[‘rank]==2, [‘user_id’,’transaction_date’]]
+df_rank2=df_rank2.rename(columns={“transaction_date”: “super_user_date”})
+
+df_merged=df.merge(df_rank2, how=‘left’, on=‘user_id’]
+df_merged[:,[‘user_id’,’super_user_date’]].sort_values(by=[‘super_user_date’], ascending=True)
+
