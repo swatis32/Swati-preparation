@@ -26,5 +26,12 @@ Where rnk =2
 On temp1.user_id=temp2.user_id
 order by user_id
 
+Python
 
+df[‘rank’]=df.sort_values(by=[‘user_id’,’action_date’], ascending=[True, False]).groupby(‘user_id’).cumcount()+1
+df_last_date=Df.loc[df[‘rank’]==1,[‘user_id’,’action_date’]
+df_second_last_date=Df.loc[df[‘rank’]==2,[‘user_id’,’action_date’]
+df_merged=df_last_date.merge(df_second_last_date, how =‘inner’, on=‘user_id’] —— This keeps only one user_id column automatically 
+df_merged[‘days_between’]= (df_merged[‘action_date_x’]-df_merged[‘action_date_y]).dt.days
+df_merged[:,[’user_id’,’days_between’]
 
