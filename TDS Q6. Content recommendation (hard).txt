@@ -17,3 +17,9 @@ Where CONCAT(user,friend_likes) not in
 (Select CONCAT(user, page_likes) from likes)
 order by 1
 
+Python
+
+likes[‘concat_user_id_page_like’]=likes[‘user_id’].astype(str)+”-“+likes[‘page_like’]
+df=users.merge(friends, how=‘inner’, left_on=‘friend’, right_on=‘user_id’)
+df[‘concat_user_id_friend_like’]=df[‘user_id’].astype(str)+”-“+df[‘page_like’]
+df.loc[~df[‘concat_user_id_friend_like’].isin(likes[‘concat_user_id_page_like’],[‘user_id’,’page_like’])
