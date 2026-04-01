@@ -65,25 +65,17 @@ Frequency not provided
 
 2. 
 
-With t1 as 
+Select case when mod(count(*),2)=0 then
+					(select avg(salary) from 
+						(select salary , row_number()over(order by salary DESC) as rnk) from employee) t1
+						where rnk in ( count(*)/2, (count(*)+1)/2))
 
-(select avg (salary) as result, ‘even’ as type from 
-
-(Select salary, row_number()over( order by salary) as rnk from employee ) t1
-
-Where rnk in ( select count(*)/2, count(*)/2+1 from employee)					)
-Union all
-select avg (salary) as result , ‘odd’ as type from 
-
-	(Select salary, row_number()over( order by salary) as rnk from employee ) t1
-
-						Where rnk in ( select (count(*)+1)/2 from employee)
-)
-
-Select case when mod(count (*),2)=0 then (select result from t1 where type=‘even’)
-		else (select result from t1 where type=‘odd’)
+		when mod(count(*),2)!=0 then
+					 (select avg(salary) from 
+						(select salary , row_number()over(order by salary DESC) as rnk) from employee) t1
+						where rnk in ( (count(*)+1)/2)
 		end as median
-From employee 
+	 from employee
 
 3.
 Frequency provided
