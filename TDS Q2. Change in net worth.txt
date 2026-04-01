@@ -8,16 +8,19 @@ From the following table of transactions between two users, write a query to ret
 My solution:
 
 
-Select user, nw from 
+Select user, net_worth from
+
 (
-Select user, sum(amount) over(partition by user order by date) as nw, dense_rank() over(partition by user order by date DESC) as rank from
-(
-Select sender as user,  date, amount*-1 as amount from transact
-union 
-Select receiver as user, date, amount*-1 as amount from transact
-)
-) T1
-Where rank=1
-order by nw DESC
+Select user, transaction_date, sum(amount)over(partition by user order by transaction_date) as net_worth ,
+dense_rank()over( partition by user, order by transaction_date DESC) as rnk
+
+FROM
+
+(Select transaction_date, sender as user, -1* amount as amount from transactions
+Union all
+Select transaction_date, receiver as user, amount as amount from transactions )t1
+) t2 
+Where rnk=1
+Order by net_worth DESC
 
 
