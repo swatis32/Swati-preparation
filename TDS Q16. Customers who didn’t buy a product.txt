@@ -15,3 +15,17 @@ select distinct customer_id from orders where product_name='A'	and customer_id i
 (select distinct customer_id from orders where product_name='C')
 )
 order by customer_id	
+
+Another solution --------------------------
+
+select customers.id, name from orders join customers 
+on orders.customer_id=customers.id
+where product_name!=C 
+and customer_id in
+(
+select distinct customer_id
+(select customer_id from orders where product_name='A') t1
+join
+(select customer_id from orders where product_name='B') t2
+on t1.customer_id=t2.customer_id
+)
