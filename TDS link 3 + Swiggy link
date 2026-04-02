@@ -95,6 +95,14 @@ Where (EXTRACT( YEAR from CURDATE()) - EXTRACT (YEAR from departure_date ) ) in 
 Group by 1,2
 Having count(*)>10
 
+Python
+df=passenger_flights.merge(flight_details, how='inner', on='flight_id)
+df['year']=df['departure_date].dt.year
+df_grouped=df.loc[ df['year']>=2025,:].groupby(['passenger_id','departure_airport_code'], as_index=False).agg(count_flights=('flight_id','count')
+
+df_grouped[df_grouped['count_flights]>=10,['passenger_id', 'departure_airport_code']]
+
+
 
 
 
