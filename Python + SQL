@@ -44,3 +44,8 @@ df_agg=df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
 5. How do we do not in  ?
 
 customers[~customers[‘name’].isin(df['name']), ['name']]
+
+6. 
+df['col'].dt.day_name(): Returns the name of the day (e.g., "Monday").
+df['col'].dt.strftime('%Y-%m'): Formats datetimes into custom strings '2026-04'
+
