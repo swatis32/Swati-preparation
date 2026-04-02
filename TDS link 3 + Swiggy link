@@ -48,6 +48,17 @@ Group by 1, 2) b
 On a. customer_id=b.customer_id
 And b.year=a.year+1
 
+Python
+
+df['year']=df['purchase_date'].dt.year
+
+df_grouped=df.groupby(['customer_id','year'],as_index=False).agg(amount=('purchase_amount','sum'))
+df_grouped['prev_year']=df['year']-1
+df_merged=df_grouped.merge(df_grouped, how='inner', left_on=['customer_id','prev_year'], right_on=['customer_id','year'])
+df_merged['growth_rate']=df['amount_y']/df['amount_x']-1
+
+df_merged[:,['customer_id','year','growth_rate']
+
 Q2. Write an SQL query to select the Supplier_id, Product_id, and start date of the period when the stock quantity was below 50 units for more than two consecutive days.
 
 Select s.supplier_id, s.product_id, min (s.record_date)
