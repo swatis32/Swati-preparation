@@ -38,7 +38,7 @@ https://medium.com/@mail2asimmanna/data-analyst-sql-questions-asked-in-swiggy-in
 
 Q1. Calculate YoY growth rate for a user
 
-Select a.customer_id, b.yearly_amount/a.yearly_amount -1 as growth_rate
+Select b.customer_id, b.year, b.yearly_amount/a.yearly_amount -1 as growth_rate
 From
 (Select customer_id, EXTRACT( year from purchase_date) as year, sum(purchase_amount) as yearly_amount from customer_purchases
 Group by 1, 2) a
