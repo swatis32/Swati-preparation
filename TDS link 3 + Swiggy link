@@ -81,6 +81,12 @@ Where sale year=‘2023’
 Group by 1,2
 )t1
 
+Python
+
+df_grouped=df.loc[df['year']==2023,:].groupby(['employee_id','store_id'], as_index=False).agg(sum_amount=('amount','sum))
+df_grouped['rank']=df_grouped.sort_values(by=['store_id','sum_amount'], ascending=[True, False]).groupby(['store_id']).cumcount()+1
+df_grouped[:,['employee_id','store_id','rank']
+
 Q4. Write an SQL query to select the Passenger_id and Departure_airport_code for passengers with more than 10 flights from the same airport since last year.
 
 Select passenger_id, departure_airport_code
