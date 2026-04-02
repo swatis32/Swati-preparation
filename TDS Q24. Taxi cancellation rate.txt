@@ -36,3 +36,14 @@ select Request_at as Day, ROUND(sum( CASE WHEN Status='completed' THEN 0
 					and Request_at in ('2013-10-01', '2013-10-02', '2013-10-03')
 			group by Request_at
             order by Request_at
+
+# Latest solution ( It should be or )
+
+select request_date, ROUND (sum(case when status like '%cancel% then 1 else 0)/count(trip_id),2) as cancel_rate
+from trips 
+where request_date in ('2020-10-01','2020-10-02')
+and (rider_id not in ( select user_id from users where type='rider' and banned='yes')
+or driver_id not in ( select user_id from users where type='driver' and banned='yes') )
+group by 1
+order by 1
+
