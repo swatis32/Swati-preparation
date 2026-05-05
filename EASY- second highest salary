@@ -35,7 +35,7 @@ SELECT
 Now with python(Good!) :
 1.
 df[‘rank’]=Df.sort_values(by=‘salary’, ascending=False).cumcount()+1
-df.loc[df[‘rank’]=2,[‘salary’]
+df.loc[df[‘rank’]==2,[‘salary’]]
 
 2.
 df_sorted=Df.sort_values(by=[‘salary’], ascending=‘False’]
