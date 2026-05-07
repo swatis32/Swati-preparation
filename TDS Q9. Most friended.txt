@@ -1,5 +1,6 @@
 # Practice Link
 https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
+https://medium.com/data-science/twenty-five-sql-practice-exercises-5fc791e24082
 
 9. Most friended
 Given the following table, return a list of users and their corresponding friend count. 
