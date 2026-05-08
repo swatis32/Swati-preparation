@@ -19,3 +19,26 @@ SELECT user2 AS user_id
 FROM friends) t1
 GROUP BY user_id
 ORDER BY friend_count DESC, user_id ASC
+
+----- Another way ----------
+
+Select user, sum (friend_count) as friend_count from
+(
+Select user1 as user, count(*) as friend_count from friends
+Union all
+Select user2 as user, count(*) as friend_count
+) t1
+Group by 1
+Order by friend_count DESC, user ASC
+
+Python
+
+df_grouped1=friends.groupby([‘user1’], as_index=False).agg(friend_count=(‘user1’, ‘count’))
+df_grouped1.rename(columns={“user1” :”user”})
+df_grouped2=friends.groupby([‘user2’], as_index=False).agg(friend_count=(‘user2’, ‘count’))
+df_grouped2.rename(columns={“user2” :”user”})
+df_grouped= pd.concat( df_grouped1, df_grouped2, ignore_index=True) # resets index to 0, 1, 2 
+
+df_grouped.groupby([‘user’], as_index=False).agg(total_count=(‘friend_count’,’sum’))
+
+
