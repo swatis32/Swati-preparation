@@ -49,3 +49,6 @@ customers[~customers[‘name’].isin(df['name']), ['name']]
 df['col'].dt.day_name(): Returns the name of the day (e.g., "Monday").
 df['col'].dt.strftime('%Y-%m'): Formats datetimes into custom strings '2026-04'
 
+7. Union in python
+
+df= pd.concat( [df1, df2] , ignore_index=True) # resets index as 0, 1 ...
