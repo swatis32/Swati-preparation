@@ -25,4 +25,4 @@ df_merged= Attendance.merge(students, how=‘inner’, on=‘student_id’]
 
 df_attended=df_merged.loc[df_merged[‘attendance’]==1 & (df[‘year-mon-school-date’]==df[‘year-mon-dateofbirth’]), [‘student_id’]]
 
-answer= df_attended[‘student_id’].nunique() /attendance[‘student_id].nunique()
+answer= round(df_attended[‘student_id’].nunique() /attendance[‘student_id].nunique() ,2)
