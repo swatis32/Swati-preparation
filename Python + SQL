@@ -46,8 +46,15 @@ df_agg=df_agg.rename(columns={"mean": "Average", "sum": "Sum_value"})
 customers[~customers[‘name’].isin(df['name']), ['name']]
 
 6. 
+df['col']=pd.to_datetime(df['col']
+
 df['col'].dt.day_name(): Returns the name of the day (e.g., "Monday").
 df['col'].dt.strftime('%Y-%m'): Formats datetimes into custom strings '2026-04'
+Note: dt works on datetime objects in pandas dataframe columns
+
+SYSDATE in python
+import datetime
+datetime.datetime.now()
 
 7. Union in python
 
