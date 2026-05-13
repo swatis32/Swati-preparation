@@ -19,3 +19,10 @@ Where rnk=1
 And score > 0
 Group by 1,2
 Order by sum(score) DESC, hacker_id ASC
+
+Python
+df= submissions.merge(hackers, how =“inner”, on =“hacker_id”)
+df[‘rank’]=df.sorted_values(by=[‘hacker_id’,’challenge_id’,’score’], ascending=[True, True, False]).groupby([‘hacker_id’,’challenge_id’).cumcount()+1
+
+df_result= Df.loc[df[‘score’]>0 & rank=1, [‘hacker_id’,’hacker_name’,’score’]].groupby([‘hacker_id’,’hacker_name’], as_index=False).agg (total_score= (’score’, ‘sum’))
+df_result_sorted= df_result.sorted_values(by=['total_score','hacker_id], ascending=[False, True])
