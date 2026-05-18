@@ -15,4 +15,4 @@ From scores
 Order by score DESC
 
 Python
-df[‘rank’]= sorted_values(by=‘score’ , ascending = False).cumcount()+1
+df[‘rank’]= sort_values(by=‘score’ , ascending = False).cumcount()+1
