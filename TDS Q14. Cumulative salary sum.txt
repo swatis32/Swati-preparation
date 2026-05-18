@@ -15,7 +15,16 @@ where month_rank != 1
 and month_rank <=4
 order by id, pay_month
 
-
-
 ROWS BETWEEN EXAMPLE:
 https://learnsql.com/blog/sql-window-functions-rows-clause/
+https://www.geeksforgeeks.org/sql/sql-rows-between/
+
+Python
+
+df[‘rank’]=sort_values(by=[‘id’,’pay_month’], ascending=[True, False]).groupby([‘id’]).cumcount()+1
+df[‘cumsum_salary’]=df.l‘salary’].cumsum()
+
+df_final=df.loc[df[‘rank’]!=1 & df[‘rank’]<=4, [‘id’,’pay_month’,’salary’,’cumsum_salary’]]
+df_final_sorted=df_final.sort_values(by=[‘id’,’pay_month’], ascending=[True, True])
+
+
