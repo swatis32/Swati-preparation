@@ -21,3 +21,9 @@ Method 2: https://learnsql.com/blog/sql-window-functions-rows-clause/
 
 Select month, sum(salary) over(order by month ROWS BETWEEN CURRENT ROW and 2 FOLLOWING) as salary_3_months
 From salary
+
+Python
+
+df_sorted=df.sort_values(by='month' , ascending=True)
+df_sorted['salary_3months']=df['salary'][::-1].rolling(window=3).sum()[::-1]
+df.loc[:,['month','salary','salary_3months']]
