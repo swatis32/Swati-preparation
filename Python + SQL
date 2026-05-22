@@ -59,3 +59,7 @@ datetime.datetime.now()
 7. Union in python
 
 df= pd.concat( [df1, df2] , ignore_index=True) # resets index as 0, 1 ...
+
+8. Rolling window
+
+df['rolling_sum']=df['col'].rolling(window=3).sum()
