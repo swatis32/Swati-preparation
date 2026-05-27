@@ -29,3 +29,14 @@ join
 (select customer_id from orders where product_name='B') t2
 on t1.customer_id=t2.customer_id
 )
+
+Python
+
+df_a= pd.DataFrame(df.loc[df[‘product_name’]==‘A’, [‘customer_id’]].unique(), columns=[‘customer_id’])
+df_b= pd.DataFrame(df.loc[df[‘product_name’]==‘B’, [‘customer_id’]].unique(), columns=[‘customer_id’])
+df_c= pd.DataFrame(df.loc[df[‘product_name’]==‘C’, [‘customer_id’]].unique(), columns=[‘customer_id’])
+
+df_merged_ab=df_a.merge(df_b, how =‘inner’ , on=‘customer_id’)
+
+df_final=df_merge_ab.loc[~df_merge_ab[‘customer_id’].isin(df_c[‘customer_id),’customer_id’]
+df_final_result= df_final.merge(customers, how=‘inner’, left_on=‘customer_id’, right_on=‘id’)
