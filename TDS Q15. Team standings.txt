@@ -28,7 +28,30 @@ select team_name , sum(points) as total_points from
 	order by total_points DESC, team_name
 
 
+Python
 
+df[‘host_points’]=1
+df.loc[df[‘host_goals’]>df[‘guest_goals’,[‘host_points’]]=3
+df.loc[df[‘host_goals’]<df[‘guest_goals’,[‘host_points’]]=0
+df[‘guest_points’]=1
+df.loc[df[‘host_goals’]<df[‘guest_goals’,[‘host_points’]]=3
+df.loc[df[‘host_goals’]>df[‘guest_goals’,[‘host_points’]]=0
+
+df_grouped1=Df.groupedby([‘host_team’], as_index=False).agg(sum_points=(‘host_points’, ‘sum’)
+df_grouped1 = df_grouped1.rename(columns={“host_team: “team”, “host_points: “points”})
+
+
+df_grouped2=Df.groupedby([‘guest_team’], as_index=False).agg(sum_points=(‘guest_points_points’, ‘sum’)
+df_grouped2=df_grouped2.rename(columns={‘guest_team’:’team’, ‘guest_points’:’points’})
+
+df_grouped=pd.concat(df_grouped1, df_grouped2)
+df_grouped_final=df_grouped.groupby(‘team’).agg(sum_points=(points’, ‘sum’))
+
+df_merged=df_grouped_final.merge(teams, how=‘inner’, left_on=‘team’, right_on=‘team_id’)
+
+df_merged=df_merged.loc[:, [‘team_name’, ‘sum_points’]]
+
+df_merged.sort_values( by =[’sum_points’,’team_name’], ascending=[False, True])
 
 
 
