@@ -41,6 +41,8 @@ where rnk>=(select count(*)/2 from station)
 and rnk<=(select (count(*)/2)+1 from station)
 
 
+Python :
 
+df_grouped=df.groupby(‘state’, as_index=False).agg(median_value=(‘latitude’,’median’))
 
 
