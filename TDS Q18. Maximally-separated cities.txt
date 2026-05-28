@@ -6,13 +6,28 @@ From the same table in question 17, write a query to return the
 furthest-separated pair of cities for each state, and the corresponding 
 distance (in degrees, rounded to 2 decimal places) between those two cities
 
-select state, city1, city2, dist from
+Select state, city_1, city_2, distance from
 (
-select T1.state, T1.city as city1, T2.city as city2 , ROUND(SQRT(SUM(POWER((T1.latitude-T2.latitude),2),POWER((T1.longitude-T2.longitude),2))),2) as dist, 
-rank() OVER(partition by T1.state order by ROUND(SQRT(SUM(POWER((T1.latitude-T2.latitude),2),POWER((T1.longitude-T2.longitude),2))),2) DESC) as rnk
+Select state, city_1, city_2, distance , dense_rank()OVER( partition by state order by distance DESC) as rnk
+From
+(
+Select state, c1.city as city_1, c2.city as city_2 ,  sqrt(pow((c1.lat-c2.lat),2) + pow((c1.lon-c2.lon),2) ) as distance from stations c1
+Join stations c2
+On c1.state=c2.state
+And c1.city!=c2.city
+) t1
+) t2
+Where rnk =1
 
-																		from stations T1
-																	 	join stations T2
-																		on T1.state=T2.state and T1.city!=T2.city
-)T3
-where rnk=1
+Python
+
+df_merged=stations.merge(stations, how=‘inner’, on=‘state’)
+df_merged = df_merged.loc[df_merged[‘city_x’]!=df_merged[‘city_y’],:]
+df_merged[‘distance’]= np.sqrt((df_merged[lat_x]- df_merged[lat_y])**2 + (df_merged[lon_x]- df_merged[lon_y])**2 )
+df_merged[‘distance’]=df_merged[‘distance’].round(2)
+
+df_merged[‘rank’]=df_merged.sort_values(by=[‘state’, ‘distance’], ascending=[True, False]).groupby(‘state’).cumcount()+1
+
+df_final=df_merged.loc[df_merged[‘rank’]==1, [‘state’,’city_x’,’city_y’,’distance’]]
+
+df_final= df_final.rename(columns={‘city_x’:’city_1’, ‘city_y’:’city_2’})
