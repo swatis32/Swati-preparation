@@ -16,3 +16,12 @@ select EXTRACT(MONTH from U1.join_date) as month, (U2.join_date-U1.join_date) as
 )T1
 group by month
 order by month 
+
+Python
+
+df_merged=df.merge(df, how=‘inner’, left_on=‘invited_by’, right_on=‘user_id’)
+df_merged[‘month’]=df_merged[‘join_date_x’].dt.month
+df_merged[‘diff_days’]=(df_merged[‘join_date_x’]-df_merged[‘join_date_y’]).dt.days
+
+df_final=df_merged.groupby(‘month’, as_index=False).agg(avg_days=(‘diff_days’, ‘mean’))
+df_final=df_final.sort_values( by=‘month’, ascending=True)
