@@ -21,3 +21,15 @@ Where assignment =1) T
 ) T
 on C.assignment!=T.assignment
 
+Python
+
+df_grouped=df.groupby([‘assignment’], as_index=False).agg( mean_outcome =(‘outcome’, ‘mean), std_outcome=(‘outcome’, std’) , n=(‘outcome’, ‘count’))
+
+df_t1= df_grouped.loc[df[‘assignment’]==0, [‘assignment’, ‘mean_outcome’, ‘std_outcome’, ’n’]]
+df_t2= df_grouped.loc[df[‘assignment’]==1, [‘assignment’, ‘mean_outcome’, ‘std_outcome’, ’n’]]
+
+df_t1[‘point_estimate’]=df_t1[‘mean_outcome’]- df_t2[‘mean_outcome’]
+df_t1[‘lb’]= df_t1[‘point_estimate’] - 1.96 * np.sqrt( df_t1[std_outcome]**2/t1.n + df_t2[std_outcome]**2/t2.n)
+df_t1[‘ub’]= df_t1[‘point_estimate’] - 1.96 * np.sqrt( df_t1[std_outcome]**2/t1.n + df_t2[std_outcome]**2/t2.n)
+
+df_t1.loc[:,[‘point_estimate’, ‘lb’, ‘ub’]]
