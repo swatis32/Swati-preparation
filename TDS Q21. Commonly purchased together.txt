@@ -25,3 +25,13 @@ group by product_pair
 order by count(*) desc
 LIMIT 3
 
+Python
+
+df_merged=df.merge(products, how ='inner', left_on='product_id', right_on='id']
+df_merged=df_merged.loc[:,['order_id','customer_id','product_id','name']]
+df_final=df_merged.merge(df_merge, how='inner', on=['order_id', 'customer_id'])
+df_final= df_final.loc[ df_final['name_x'] < df_final['name_y'], :]
+df_final['product_pair']=df_final['name_x']+df_final['name_y']
+df_final=df_final[:,'product_pair']
+
+df_result= df_final.groupby(['product_pair'], as_index=False).agg(count_pr=('product_pair', 'count')
