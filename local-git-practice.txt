@@ -1,0 +1,30 @@
+How to push and pull from remote repo :
+
+Steps that worked
+
+1. Create : folder on desktop : git-sql-prep 
+2. Go to terminal and navigate :  cd C:\Users\swati\Desktop\git-sql-prep
+3. git init
+4. Generate token using **
+5. git remote add origin https://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@github.com/swatis32/Swati-preparation.git
+6. git pull origin master
+7. make changes in local
+git branch (make sure you are in master)
+8. git add .
+9. git commit -m "Message for commit"
+8. git pull --rebase origin master ( You will pull latest remote changes in local )
+9. git push origin master
+
+You will see your local changes in remote
+
+
+
+** 
+Generate token on github.com using these steps:
+Generate a Personal Access Token (PAT)Log in to your account on the GitHub Website.
+Click your Profile Photo in the top right corner and select Settings.
+Scroll down the left sidebar and click Developer settings.
+Click Personal access tokens and select Tokens (classic).Click Generate new token \(\rightarrow \) Generate new token (classic).
+Give it a descriptive Note (e.g., "Terminal access") and choose an Expiration date.
+Select the repo checkbox (this allows you to push and pull).Click Generate token at the bottom of the page.Copy the token immediately. You will not be able to see it again.
+using the token that you generated and this format git remote add origin https://token@github.com/user/repo_name.git, add using command in 5
