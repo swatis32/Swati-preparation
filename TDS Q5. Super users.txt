@@ -48,7 +48,7 @@ df_merged=df.merge(df_rank2, how=‘left’, on=‘user_id’]
 df_merged[:,[‘user_id’,’super_user_date’]].sort_values(by=[‘super_user_date’], ascending=True)
 
 Method 2:
-df[‘rank’]=df.loc[:,[‘user_id’,’transaction_date’]].sort_values(by=‘transaction_date’, ascending =True).groupby([‘user_id’]).cumsum()+1
+df[‘rank’]=df.loc[:,[‘user_id’,’transaction_date’]].sort_values(by=[‘user_id’,’transaction_date’], ascending=[True, False]).groupby([‘user_id’]).cumsum()+1
 
 df1=df.loc[df[‘rank’]==2,[‘user_id’,’transaction_date’]]
 df1.rename(columns = {‘transaction_date’ : ‘super_user_date’})
