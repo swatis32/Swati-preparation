@@ -16,3 +16,14 @@ from
 select DISTINCT mobile.user_id as mobile_user, web.user_id as web_user from mobile full outer join web
 					on mobile.user_id=web.user_id
 )T1
+---- Note distinct above is key 
+
+Python
+
+df_merged=Df.merge(df, how=“outer”, on=“user_id”)
+df_merged=df_merged.loc[:,[user_id_x, user_id_y]].drop_duplicates()
+
+mobile_only=len(df_merged.loc[df[‘user_id_x].isnotnull() & df[‘user_id_x].isnull(),:])/len(def_merged)
+desktop_only=len(df_merged.loc[df[‘user_id_x].isnull() & df[‘user_id_x].isnotnull(),:])/len(def_merged)
+
+both= len(df_merged.loc[df[‘user_id_x].isnotnull() & df[‘user_id_x].isnotnull(),:])/len(def_merged)
