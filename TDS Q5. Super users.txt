@@ -16,6 +16,26 @@ where rnk=2
 on users.user_id=T2.user_id
 order by super_user_date
 
+Another way ----------
+
+Select user_id, super_user_date
+From
+(
+Select user_id, transaction_date as super_user_date from
+
+(Select user_id, transaction_date, dense_rank()OVER (order by transaction_date) as rnk from 
+Users) t
+Where rnk=2
+
+Union all
+
+Select user_id, NULL as super_user_date from
+Users 
+Group by 1
+Having count(*)=1
+) temp
+Order by super_user_date
+
 Python
 
 df[‘rank’]=Df.sort_values(by=[‘user_id’,’transaction_date’], ascending=[True, False]).groupby(‘user_id’).cumcount()+1
