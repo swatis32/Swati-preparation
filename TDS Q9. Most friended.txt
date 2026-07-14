@@ -39,6 +39,6 @@ df_grouped2=friends.groupby([‘user2’], as_index=False).agg(friend_count=(‘
 df_grouped2.rename(columns={“user2” :”user”})
 df_grouped= pd.concat( df_grouped1, df_grouped2, ignore_index=True) # resets index to 0, 1, 2 
 
-df_grouped.groupby([‘user’], as_index=False).agg(total_count=(‘friend_count’,’sum’))
+df_final=df_grouped.groupby([‘user’], as_index=False).agg(total_count=(‘friend_count’,’sum’))
 
-
+df_final.sort_values(by=[’total_count’,’user’], ascending=[False,True])
