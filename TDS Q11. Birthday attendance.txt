@@ -5,6 +5,7 @@ https://towardsdatascience.com/twenty-five-sql-practice-exercises-5fc791e24082
 two decimal places, who attended school
 (attendance = 1) on their birthday.
 
+Method 1--------------------------------
 Select ROUND (count (distinct case when year_mon_school_date= date_of_birth and attendance=1 then student_id else NULL end) / count ( distinct student_id) ,2) as attendance_pct 
 FROM
 (
@@ -26,3 +27,24 @@ df_merged= Attendance.merge(students, how=‘inner’, on=‘student_id’]
 df_attended=df_merged.loc[df_merged[‘attendance’]==1 & (df[‘year-mon-school-date’]==df[‘year-mon-dateofbirth’]), [‘student_id’]]
 
 answer= round(df_attended[‘student_id’].nunique() /attendance[‘student_id].nunique() ,2)
+
+
+Method 2----------------------
+
+Select ROUND(count (distinct student_id)/ (select count(distinct student_id) from students),2) as birthday_attendance
+
+(Select s.student_id from students s join attendance a
+On s.student_id = a.student_id
+And extract(month from school_date)= extract (month from date_of_birth)
+And extract (day from school_date) = extract (day from date_of_birth) 
+And attendance =1) t1
+
+OK now python version:
+
+df= students.merge(attendance, how=“inner”, on=“student_id”)
+df[‘y_m_school_date’]=df[‘school_date’].dt.strftime(“%Y-%m”)
+df[‘y_m_db’]=df[‘date_of_birth’].dt.strftime(“%Y-%m”)
+df_attending=Df.loc[df[‘attendance’]==1 & (df[‘y_m_school_date’]==df[‘y_m_db’]),[‘student_id’]]
+
+birthday_attendance= round(df_attending[‘student_id’].nunique()/ students[‘student_id’].nunique(),2)
+
