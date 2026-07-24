@@ -15,6 +15,18 @@ where month_rank != 1
 and month_rank <=4
 order by id, pay_month
 
+Another way:
+
+Select id, pay_month , salary , sum(salary)OVER (partition by id order by pay_month ROWS BETWEEN 2 PRECEEDING AND CURRENT ROW ) as cumsalary
+FROM
+(Select id, pay_month , salary, dense_rank() OVER( partition by id order by pay_month DESC) as rnk
+From employee) t1
+
+Where rnk != 1
+Order by id, pay_month
+
+-----------------------------------------------------------
+
 ROWS BETWEEN EXAMPLE:
 https://learnsql.com/blog/sql-window-functions-rows-clause/
 https://www.geeksforgeeks.org/sql/sql-rows-between/
