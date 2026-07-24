@@ -33,10 +33,10 @@ https://www.geeksforgeeks.org/sql/sql-rows-between/
 
 Python
 
-df[‘rank’]=sort_values(by=[‘id’,’pay_month’], ascending=[True, False]).groupby([‘id’]).cumcount()+1
-df[‘cumsum_salary’]=df.l‘salary’].cumsum()
+df[‘rank’] = df.sort_values(by=[‘id’,’pay_month’], ascending = [True, False]).groupby(‘id’).cumsum()+1
+df_new=Df.loc[df[‘rank’]>1, [‘id’, ‘pay_month’, ‘salary’]]
+df_new=df_new.sort_values(by=[‘id’,’pay_month’] , ascending = [True, True])
+df_new[‘cum_sum’]=df_new.groupby([‘id’])[‘salary’].window(rolling =3).sum().reset_index(level=0, drop=True)
 
-df_final=df.loc[df[‘rank’]!=1 & df[‘rank’]<=4, [‘id’,’pay_month’,’salary’,’cumsum_salary’]]
-df_final_sorted=df_final.sort_values(by=[‘id’,’pay_month’], ascending=[True, True])
 
 
