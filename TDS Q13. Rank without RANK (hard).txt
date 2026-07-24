@@ -16,3 +16,4 @@ Order by score DESC
 
 Python
 df[‘rank’]= sort_values(by=‘score’ , ascending = False).cumcount()+1
+df.loc[:,[‘score’,’rank’]].sort_values(by=‘rank’ ascending= False)
