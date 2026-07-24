@@ -38,5 +38,6 @@ df_new=Df.loc[df[‘rank’]>1, [‘id’, ‘pay_month’, ‘salary’]]
 df_new=df_new.sort_values(by=[‘id’,’pay_month’] , ascending = [True, True])
 df_new[‘cum_sum’]=df_new.groupby([‘id’])[‘salary’].window(rolling =3).sum().reset_index(level=0, drop=True)
 
-
+Note:
+.reset_index(level=0, drop=True): The grouped rolling operation returns a multi-index (Group, Original Index). This drop command strips the group level so you can cleanly assign the series back into your original DataFrame. 
 
