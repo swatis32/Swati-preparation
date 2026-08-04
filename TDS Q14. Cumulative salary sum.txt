@@ -22,7 +22,7 @@ FROM
 (Select id, pay_month , salary, dense_rank() OVER( partition by id order by pay_month DESC) as rnk
 From employee) t1
 
-Where rnk != 1
+Where rnk != 1 and rnk<=4
 Order by id, pay_month
 
 -----------------------------------------------------------
