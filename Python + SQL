@@ -10,7 +10,15 @@ from products
 
 Python:
 
+# This is like row_number() 
 df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).groupby(['category']).cumcount()+1
+
+#This is dense_rank()
+df['rank'] = (
+    df.sort_values(by=['category', 'sales'], ascending=[True, False])
+    .groupby('category')['sales']  # <-- Explicitly select 'sales' otherwise dense_rank() could be on other columns in df
+    .rank(method='dense', ascending=False)
+)
 
 2. Mapping: 
 
