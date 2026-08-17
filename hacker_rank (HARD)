@@ -24,3 +24,20 @@ where rnk>1
 group by challenges
 having count(*)=1
 order by challenges DESC, hacker_id
+
+Python
+
+df_merged= hackers.merge(challenges , how= ‘inner’, on =“hacker_id”)
+df_grouped=df_merged.groupby([‘hacker_id’, ‘name’], as_index=False). agg(challenges_created=(‘challenge_id’, ‘nunique’)
+df_grouped[‘rank’]=df_grouped[‘challenges_created’].rank(method= ‘dense’, ascending =False).astype(int)
+
+
+df_part1=df_grouped.loc[df_grouped[‘rank’]==1, [‘hacker_id’, ‘name’, ‘challenges_created’]
+challange_number=df_grouped.groupby([‘challenges_created’], as_index=False).agg(challenge_count=(‘challenges_created’, ‘count’))
+
+df_part1=df_grouped.loc [df_grouped[‘challenges_created’].isin(challenge_number .loc[challenge_number[‘challenge_count’]==1, ‘challenges_created’].unique(), [‘hacker_id’, ‘name’, ‘challenges_created’]]
+
+df_final=pd.concat([df_part1, df_part2], ignore_index=True)
+
+df_final.drop_duplicates (ignore_index=True)
+
