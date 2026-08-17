@@ -56,6 +56,10 @@ SYSDATE in python
 import datetime
 datetime.datetime.now()
 
+Subtract days between:
+
+df['days_diff'] = (df['end_date'] - df['start_date']).dt.days
+
 7. Union in python
 
 df= pd.concat( [df1, df2] , ignore_index=True) # resets index as 0, 1 ...
