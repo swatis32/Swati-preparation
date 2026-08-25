@@ -27,3 +27,12 @@ My solution wont be right as only 3,4 will be output:
 
 select distinct c1.seat_id from cinema c1, cinema c2 where c1.seat_id=c2.seat_id-1 and s1.free=1 and s2.free=1
 
+Python
+
+new_df=Df.merge(df , how =“cross”)
+new_df=new_df.loc[((new_df[seat_id_x]==new_df[seat_id_y]-1) or (new_df[seat_id_y]==new_df[seat_id_x]-1)) &
+new_df[free_x]==1 & new_df[free_y]==1, ‘seat_id_x’]
+
+new_df[‘seat_id_x’].unique() 
+
+
