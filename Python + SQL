@@ -17,7 +17,7 @@ df['rank']= df.sort_values (by=['category','sales'], ascending=[True, False]).gr
 df['rank'] = (
     df.sort_values(by=['category', 'sales'], ascending=[True, False])
     .groupby('category')['sales']  # <-- Explicitly select 'sales' otherwise dense_rank() could be on other columns in df
-    .rank(method='dense', ascending=False)
+    .rank(method='dense', ascending=False).astype(int) # <--- default in float 1.0, 2.0 etc
 )
 
 2. Mapping: 
