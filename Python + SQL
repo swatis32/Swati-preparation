@@ -80,4 +80,11 @@ df['rolling_sum']=df['col'].rolling(window=3).sum()
 
 unique() is for 1 column;  for multiple rows is drop_duplicates(ignore_index=True)
 
+10. Self join
+
+In pandas it is best to do cross join and then filter by loc:
+
+new_df=Df.merge(df , how =“cross”)
+new_df=new_df.loc[((new_df[seat_id_x]==new_df[seat_id_y]-1) or (new_df[seat_id_y]==new_df[seat_id_x]-1)) &
+new_df[free_x]==1 & new_df[free_y]==1, ‘seat_id_x’]
 
