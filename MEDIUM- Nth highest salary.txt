@@ -10,6 +10,6 @@ select distinct salary as Nthsalary from
 
 Python
 
-df[‘rank’]= df[‘salary’].rank( method =dense, ascending = False]
+df[‘rank’]= df[‘salary’].rank( method ='dense', ascending = False]
 
 Df.loc[df[‘rank’]==n, ‘salary’]
