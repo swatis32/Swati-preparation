@@ -63,4 +63,10 @@ OR
 Select dept_name, count(distinct student_id) from department left join student 
 on student.dept_id=department.dept_id group by dept_name order by count(*) DESC, order by dept_name ASC
 
+Python
+
+
+df_merged= department.merge(students , how = “left”, on =“dept_id”)
+df_result=df_merged.groupby ([‘dep_name’], as_index=False).agg(student_number= (‘student_id’, ’nunique’))
+df_result.sort_values(by=[‘student_number’, ‘dep_name’], ascending =[False True])
 
