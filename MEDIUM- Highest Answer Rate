@@ -53,4 +53,19 @@ Group by 1
 ) t1
 ) t2
 Where rnk =1 
+
+
+Python
+
+df_ques=Df.loc[df[‘action’]==‘show’, ‘question_id’]
+df_ntr=df_ques.groupby([‘question_id’], as_index=False).agg(impressions=(‘question_id’, ‘count’))
+
+df_ans=df.loc[df[‘answer_id’].notnull(), ‘question_id’]
+df_dtr=df_ans.groupby([‘question_id’], as_index=False).agg(answers=(‘question_id’, ‘count’))
+
+df_merged=df_ntr.merge(df_dtr, how=‘inner’, on=‘question_id)
+df_merged[‘ans_rate’]=df_merged[‘answers’]/df_merged[‘impressions’]
+
+df_merged= df_merged.sort_values(by=‘ans_rate’, ascending = False)
+df_merged[‘question_id’][0]
 					
