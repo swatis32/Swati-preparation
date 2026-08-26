@@ -29,6 +29,7 @@ Explanation:
 question 285 has answer rate 1/1, while question 369 has 0/1 answer rate, so output 285.
 Note: The highest answer rate meaning is: answer number's ratio in show number in the same question.
 
+
 SELECT 
     question_id AS 'survey_log'
 FROM
@@ -37,19 +38,19 @@ GROUP BY question_id
 ORDER BY COUNT(answer_id) / COUNT(IF(action = 'show', 1, 0)) DESC
 LIMIT 1;
 
-LATEST ANSWER BY SWATI on 4/4/2021:
+Another way ----------
 
-select question_id as survey_log from
-                 (SELECT question_id, COUNT(*) as nr
-                  from Table
-                  group by question
-                  having action='answer') as T1
-                  join
-                 (SELECT question_id, COUNT(*) as dr
-                  from Table
-                  group by question
-                  having action='show') as T2
-                 on T1. question_id=T2.question_id
-                 ORDER BY nr/dr DESC
-                 LIMIT 1
+Select question_id from
+(
+Select question_id , ans_rate,  dense_rank() OVER (order by ans_rate DESC) as rnk
+(
+Select question_id, sum (case when action = “show” then 1 else 0 end) as impressions, 
+					sum (case when answer_id is not null then 1 else 0 end) as answered,
+					sum (case when action = “show” then 1 else 0 end) / sum (case when answer_id is not null then 1 else 0 end) as ans_rate
+ From survery_log
 
+Group by 1
+) t1
+) t2
+Where rnk =1 
+					
