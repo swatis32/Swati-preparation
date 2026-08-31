@@ -23,4 +23,29 @@ Select transaction_date, receiver as user, amount as amount from transactions )t
 Where rnk=1
 Order by net_worth DESC
 
+Another way : (Since we don't need the dense rank)
+-------------------------------------------------------------------------------------------------------------------
+Select user, sum( value) as net_worth 
+FROM
+(
+Select sender as user, -1* sum(amount) as value from transactions
+Group by 1
+Union
+Select receiver as user,  sum(amount) as value from transactions
+Group by 1
+) t
+Group by 1
+Order by 1
+
+Python
+
+df_grouped1=Df.groupby(‘sender’, as_index=False).agg(value= (‘amount’, ‘sum’))
+df_grouped1[‘value’]= -1* df_grouped1[‘value’]
+df_grouped1.rename(cols= {‘sender’  : ‘user’})
+df_grouped2=Df.groupby(‘receiver’, as_index=False).agg(value= (‘amount’, ‘sum’))
+df_grouped2.rename(cols= {‘receiver’  : ‘user’})
+
+df_results=pd.concat(df_grouped1, df_grouped2, ignore_index=True)
+df_results.groupby([‘user’], as_index= False).agg (net_worth = (‘value’, ’sum’)
+
 
