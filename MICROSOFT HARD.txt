@@ -1,6 +1,23 @@
 https://www.stratascratch.com/blog/facebook-and-microsoft-data-science-sql-interview-questions/		
 
+LATEST SOLUTION
+------------------------------------------------------------
+Select month, COUNT (DISTINCT (case when dense_rank=1 then customer_id else NULL))/ COUNT ( DISTINCT customer_id) as pct_new_customers, 
+			 COUNT (DISTINCT (case when dense_rank >=1 then customer_id else NULL))/ COUNT ( DISTINCT customer_id) as pct_existing_customer
 
+FROM
+(
+Select month, customer_id, dense_rank()OVER (partition by customer_id order by month ) from 
+
+(Select extract (month from time_id) as month, customer_id, event_type, event_id from table) t1
+) temp 
+Group by 1
+Order by 1
+
+---------------------------------------------------------------------------------------
+
+
+Another method :
 
 Select month_user, new_users/all_users, 1-new_users/all_users from
 (
