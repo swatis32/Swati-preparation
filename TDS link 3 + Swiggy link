@@ -26,12 +26,17 @@ Select case when weekday(date) 0 then ‘Monday’
 From house_price
 Group by 1
 Order by 1
+
+weekday (Monday = 0, Tuesday = 1...)
+
 -------------------
 using dayname()
 --------------------- 
 select dow, avg(price) from
 (select dayname(date) as dow , price from melb ) t1
 group by 1
+
+
 
 Swiggy link
 https://medium.com/@mail2asimmanna/data-analyst-sql-questions-asked-in-swiggy-interview-dbe07b5e451f
