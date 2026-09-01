@@ -88,3 +88,7 @@ new_df=Df.merge(df , how =“cross”)
 new_df=new_df.loc[((new_df[seat_id_x]==new_df[seat_id_y]-1) or (new_df[seat_id_y]==new_df[seat_id_x]-1)) &
 new_df[free_x]==1 & new_df[free_y]==1, ‘seat_id_x’]
 
+The Symmetrical Approach: Used when you are looking for any adjacent seat regardless of who is left or right 
+so this is reason why we need (s1.id=s2.id+1 or s2.id=s1.id+1); 
+but other self joins do not need this
+
