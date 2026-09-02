@@ -98,7 +98,7 @@ Select passenger_id, departure_airport_code
 From passenger_flights.flight_id=flight_details.flight_id
 Where (EXTRACT( YEAR from CURDATE()) - EXTRACT (YEAR from departure_date ) ) in (0,1)
 Group by 1,2
-having count (distinct flight_id)>10
+having count (passenger_flights.distinct flight_id)>10
 
 Python
 df=passenger_flights.merge(flight_details, how='inner', on='flight_id)
