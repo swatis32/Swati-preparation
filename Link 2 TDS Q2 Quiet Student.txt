@@ -17,7 +17,19 @@ on s.student_id= exam.student_id
 ) t1
 where (score!=max_score or score!=min_score)
 
-Method 2: 
+Method 2:
+Select student_id, student_name from
+
+(Select exam_id, student.student_id, student_name, dense_rank() OVER (partition by by exam_id  order by score DESC) as highest_rank,
+						   dense_rank() OVER (partition by by exam_id  order by score) as lowest_rank,
+
+From exam
+Join student
+On exam.student_id=student_id
+) 
+Where (highest_rank!= 1 or lowest_rank!=1)
+
+Method 3: 
 Select student_id, name 
 
 (Select student.student_id, name, exam_id, score from student join
