@@ -44,7 +44,10 @@ And (t1.score!= max_score or t1.score!=min_score)
 
 Python:
 
-df= student.merge(exam, how=‘inner’, on=’student_id)
-exam_t= exam.groupby([‘exam_id’], as_index=‘False).agg(min_score=(‘score’,’min’), max_score=(‘score’, ‘max’))
-df_merged=df.merge(exam_t, how=‘inner’, on=‘exam_id’)
-df_merged.loc[df[‘score’]!=df[‘max_score’] | df[‘score’]!=df[‘min_score’], [’student_id’,’student_name’]]
+df_merged= exam.merge(student , how =‘inner’ , on=‘student_id’)
+
+df[‘highest_rank’]= df_merged.sort_values ( by=[’exam_id’, ‘score’], ascending =[True, False]).groupby(‘exam_id) [score].rank(method= ‘dense’, ascending =False).asType(int)
+df[‘lowest_rank’]= df_merged.sort_values ( by=[’exam_id’, ‘score’], ascending =[True, False]).groupby(‘exam_id) [score].rank(method= ‘dense’, ascending =True).asType(int)
+
+Df_merged.loc[df_merged[(‘highest_rank’]!=1 or df_merged[‘lowest_rank’]!=1),[‘student_id’, ‘student_name’])
+
