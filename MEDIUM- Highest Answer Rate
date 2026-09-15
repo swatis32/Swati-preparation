@@ -30,13 +30,25 @@ question 285 has answer rate 1/1, while question 369 has 0/1 answer rate, so out
 Note: The highest answer rate meaning is: answer number's ratio in show number in the same question.
 
 
-SELECT 
-    question_id AS 'survey_log'
-FROM
-    survey_log
-GROUP BY question_id
-ORDER BY COUNT(answer_id) / COUNT(IF(action = 'show', 1, 0)) DESC
-LIMIT 1;
+Method 1
+
+
+Select ques_id, SUM(case when action_id = ’answer’ then 1 else 0 end)/ SUM(case when action_id = ’show’ then 1 else 0 end) as answer_rate
+Group by 1
+Order by SUM(case when action_id = ’answer’ then 1 else 0 end)/ SUM(case when action_id = ’show’ then 1 else 0 end) DESC
+LIMIT 1
+
+Python
+
+df_grouped1=df.loc[df[‘action_id’]==’show’,:].group_by(‘ques_id’, as_index=False).agg(impressions= (‘action_id’, ‘count’))
+df_grouped2=df.loc[df[‘action_id’]==’answer’,:].group_by(‘ques_id’, as_index=False).agg(answers= (‘action_id’, ‘count’))
+
+df_merged=df_grouped1.merge(df_grouped2, how =‘inner’, on=‘ques_id’)
+df_merged[‘answer_rate’]=df_merged[‘answers’]/df_merged[‘impressions’]
+df_merged=df_merged.sort_values(by=‘answer_rate’, ascending=False)
+
+df_merged[‘ques_id’][0]
+
 
 Another way ----------
 
