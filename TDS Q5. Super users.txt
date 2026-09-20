@@ -7,58 +7,37 @@ From the following table, write a query to return, for each user,
 the date when they become a super user, ordered by oldest super users first. Users 
 who are not super users should also be present in the table.
 
-Method 1:
-select distinct users.user_id, super_user_date  from users left join
+select user_id, super_user_date 
+FROM
 (
 select user_id, transaction_date as super_user_date from
-	(select user_id, transaction_date, rank()over(partition by user_id order by transaction_date) as rnk)T1
-where rnk=2
-) T2
-on users.user_id=T2.user_id
-order by super_user_date
-
-Method 2 ----------
-
-Select user_id, super_user_date
-From
 (
-Select user_id, transaction_date as super_user_date from
+(select user_id, transaction_date, dense_rank()OVER (partition by user_id order by transaction_date) as rnk
+from users) t1
+where rnk =2
+) t1
 
-(Select user_id, transaction_date, dense_rank()OVER (order by transaction_date) as rnk from 
-Users) t
-Where rnk=2
+UNION
 
-Union all
-
-Select user_id, NULL as super_user_date from
-Users 
-Group by 1
-Having count(*)=1
-) temp
-Order by super_user_date
+select user_id, NULL as super_user_date from    --- NOTE THIS CAN BE DONE!
+users group by 1
+having count(*) <2
+) order by 
+)t2
+order by super_user_date
 
 Python
 
-Method 1:
-df[‘rank’]=Df.sort_values(by=[‘user_id’,’transaction_date’], ascending=[True, False]).groupby(‘user_id’).cumcount()+1
-df_rank2=df.loc[df[‘rank]==2, [‘user_id’,’transaction_date’]]
-df_rank2=df_rank2.rename(columns={“transaction_date”: “super_user_date”})
+df['rank']=df.sort_values(by=['user_id', 'transaction_date'], ascending =[True , True]).groupby('user_id')['transaction_date'].rank(method='dense', ascending= True).asType(int)
 
-df_merged=df.merge(df_rank2, how=‘left’, on=‘user_id’]
-df_merged[:,[‘user_id’,’super_user_date’]].sort_values(by=[‘super_user_date’], ascending=True)
+super_user=df.loc[df['rank']==2, ['user_id', 'transaction_date']]
+df_grouped=df.groupby(['user_id'], as_index=False).agg(count_transactions =('user_id', 'count))
+df_grouped=df_grouped.loc[df_grouped['count_transactions']<2, ['user_id']]
+df_grouped['transaction_date']=NULL
 
-Method 2:
-df[‘rank’]=df.loc[:,[‘user_id’,’transaction_date’]].sort_values(by=[‘user_id’,’transaction_date’], ascending=[True, False]).groupby([‘user_id’]).cumsum()+1
-
-df1=df.loc[df[‘rank’]==2,[‘user_id’,’transaction_date’]]
-df1.rename(columns = {‘transaction_date’ : ‘super_user_date’})
-
-Df2 =df.groupby([‘user_id’], as_index=True).agg(user_count=(‘user’,’count’))
-df2=df2.loc[df2[‘user_count’]==1, [‘user_id]]
-Df2[‘super_user_date’]=NULL
-
-df_final=pd.concat([df1,df2] , ignore_index=True) 
-df_final.sort_values(by=[‘super_user_date’], ascending=True)	
+final_result=pd.concat(super_user, df_grouped, ignore_index=True)
+final_result.rename(columns = {'transaction_date' : 'super_user_date'})
+final_result.sort_values( by= 'transaction_date', ascending =[True])
 
 
 
