@@ -13,7 +13,7 @@ select distinct department.name,employees.id, salary, (case when salary>100000 t
 								employee.department_id=department.id
 )T1
 group by name
-having count(*) >=10
+having count(*) >=10   ----------------- NOTE : having comes after group by and before order by !
 order by sum(greater)/count(*) DESC
 LIMIT 3
 								
