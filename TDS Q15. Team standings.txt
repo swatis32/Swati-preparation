@@ -53,6 +53,48 @@ df_merged=df_merged.loc[:, [‘team_name’, ‘sum_points’]]
 
 df_merged.sort_values( by =[’sum_points’,’team_name’], ascending=[False, True])
 
+Method 2 : (same but cleaner python)
+
+select team_name, sum(points) as total_points from
+(
+select team_name, case when host_goals > gues_goals then 3 
+			    host_goals < guest_goals the 0
+			    else 1 end as points from
+teams t join matches m
+on t.team_id= matches.host_team
+UNION
+select team_name, case when guest_goals > host_goals then 3 
+			    guest_goals < host_goals the 0
+			    else 1 end as points from from
+teams t join matches m
+on t.team_id= matches.guest_team
+) t1
+group by 1
+order by sum(goals) DESC, team_name
+
+Python
+
+hosts=matches.merge(teams , how = 'inner', left_on= 'host_team', right on='team_id)
+hosts['points']= 1
+hosts.loc[hosts['host_goals'] > host['guest_goals'], 'points']= 3
+hosts.loc[hosts['host_goals'] < host['guest_goals'], 'points']= 0
+
+hosts=hosts.loc[:, ['team_name', 'points']]
+hosts_grouped = hosts.groupby(['team_name'], as_index=False).agg(total_points= ('points', 'sum'))
+
+guests=matches.merge(teams , how = 'inner', left_on= 'guest_team', right on='team_id)
+guests['points']= 1
+guests.loc[guests['guest_goals'] > guests['host_goals'], 'points']= 3
+guests.loc[guests['guest_goals'] < guests['host_goals'], 'points']= 0
+
+guests=guests.loc[:, ['team_name', 'points']]
+guests_grouped = guests.groupby(['team_name'], as_index=False).agg(total_points= ('points', 'sum'))
+
+final_result=pd.concat(host_grouped, guests_grouped, ignore_index= True)
+df_final=final_result.groupby('team_name', as_index=False).agg(total= ('total_points', 'sum'))
+df_final.sort_values(by=['total_points', 'team_name'], ascending =[False, True])
+
+
 
 
 
