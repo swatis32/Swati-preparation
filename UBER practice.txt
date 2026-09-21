@@ -30,7 +30,7 @@ Df.loc[df[‘salary’]>100000, ‘salary_flag’]=1
 df_grouped=df.groupby(‘name’, as_index=False).agg(num_employees=(‘emp_id’, ‘count’), sum_salary_flag=(‘salary_flag’, ‘sum’))
 
 df_grouped[‘pct_salary_over_100k’]=df_grouped[’sum_salary_flag’]/df_grouped[‘num_employees’]
-
+df_grouped=df_grouped.loc[df_grouped['num_employees']>10,:]
 
 df_sorted=df_grouped.sort_values(by=‘pct_salary_over_100k’ , ascending=False)
 df_sorted.loc [:, [’name’, ‘pct_salary_over_100k’]]
