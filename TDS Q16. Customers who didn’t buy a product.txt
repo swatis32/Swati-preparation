@@ -32,11 +32,19 @@ on t1.customer_id=t2.customer_id
 
 Python
 
-df_a= pd.DataFrame(df.loc[df[‘product_name’]==‘A’, [‘customer_id’]].unique(), columns=[‘customer_id’])
-df_b= pd.DataFrame(df.loc[df[‘product_name’]==‘B’, [‘customer_id’]].unique(), columns=[‘customer_id’])
-df_c= pd.DataFrame(df.loc[df[‘product_name’]==‘C’, [‘customer_id’]].unique(), columns=[‘customer_id’])
+df_A=df.loc[df['product_name']=='A', ['customer_id']]
+df_A=df_A.drop_duplicates()
 
-df_merged_ab=df_a.merge(df_b, how =‘inner’ , on=‘customer_id’)
+df_B=df.loc[df['product_name']=='B', ['customer_id']]
+df_B=df_B.drop_duplicates()
 
-df_final=df_merge_ab.loc[~df_merge_ab[‘customer_id’].isin(df_c[‘customer_id),’customer_id’]
-df_final_result= df_final.merge(customers, how=‘inner’, left_on=‘customer_id’, right_on=‘id’)
+df_C=df.loc[df['product_name']=='C', ['customer_id']]
+df_C=df_C.drop_duplicates()
+
+df_AB=df_A.merge(df_B, how='inner', on='customer_id')
+df_AB=df_AB.loc[~df_AB['customer_id].isin(df_C['customer_id],:]
+
+df_final= df_AB.merge(customers, how ='inner', on='customer_id')
+df_final.sort_values(by='customer_id', ascending=True)
+
+
