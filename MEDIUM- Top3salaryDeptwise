@@ -38,6 +38,17 @@ Select department, Name, Salary from
 Where T1.nums <=3
 order by department, Salary desc
 
+Python
+
+df=employees.merge(department, how ='left', left_on= 'department_id', right_on ='id)
+df=df.rename(columns={'name_x':'Employee', 'name_y':'department'})
+df['rank']=df.sort_values(by=['department', 'salary'], ascending=[True, False]).groupby(['department'])['salary'].rank(method='dense', ascending=False).asType(int)
+
+df_result= df.loc[df['rank']<=3, ['department','employee','salary']]
+df_result.sort_values(by=['department','salary'], ascending=[True, False]) 
+
+
+
 
 # Write your MySQL query statement below
 select d.name as 'Department', e.name as 'Employee', e.salary as 'Salary'
